@@ -1,15 +1,15 @@
 const express = require("express");
 const app = express();
 const port = 3001;
-const { ApolloServer, gql } = require("apollo-server-express");
 const sequelize = require("./config/database");
 const User = require("./models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const secretKey = "katapult_secret_key";
 const multer = require("multer");
 const path = require("path");
-const { GraphQLUpload } = require("graphql-upload");
+const fs = require("fs");
+
+const secretKey = "katapult_secret_key";
 
 // Configuration de multer pour les uploads
 const storage = multer.diskStorage({
@@ -28,207 +28,142 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Pour servir les fichiers statiques
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/api/uploads", express.static(path.join(__dirname, "uploads")));
 
-// Route pour afficher le formulaire (corrigé pour servir un fichier statique)
-app.get("/front", (req, res) => {
-  res.sendFile(__dirname + "/index.html");
-});
-
-// Route pour gérer la soumission du formulaire
-app.post("/submit", (req, res) => {
-  const { name, email, message } = req.body;
-  res.send(
-    `Formulaire soumis avec succès !<br>Nom: ${name}<br>Email: ${email}<br>Message: ${message}`
-  );
-});
-
-// Schémas GraphQL
-const typeDefs = gql`
-  scalar Upload
-
-  type User {
-    id: ID!
-    username: String!
-    email: String!
-    firstName: String!
-    lastName: String!
-    profilePicture: String
-    address: String
-    siret: String
-    phoneNumber: String
-    birthDate: String
-    token: String
+// Middleware pour vérifier le token JWT
+const authenticate = (req, res, next) => {
+  const token = req.headers.authorization;
+  if (!token) {
+    return res.status(401).send({ message: "Token manquant" });
   }
 
-  type Query {
-    login(username: String!, password: String!): User
-    getUserProfile(id: ID!): User
-  }
-
-  type Mutation {
-    register(
-      username: String!
-      email: String!
-      password: String!
-      firstName: String!
-      lastName: String!
-    ): User
-    updateUserProfile(
-      id: ID!
-      profilePicture: String
-      address: String
-      siret: String
-      birthDate: String
-      phoneNumber: String
-    ): User
-    uploadProfilePicture(id: ID!, file: Upload!): User
-  }
-`;
-
-// Résolveurs GraphQL
-const resolvers = {
-  Upload: GraphQLUpload,
-  Query: {
-    login: async (_, { username, password }) => {
-      const user = await User.findOne({ where: { username } });
-      if (!user) {
-        throw new Error("Utilisateur non retrouvé");
-      }
-
-      const valid = await bcrypt.compare(password, user.password);
-      if (!valid) {
-        throw new Error("Mot de passe incorrect");
-      }
-
-      const token = jwt.sign({ userId: user.id }, secretKey);
-      return { ...user.toJSON(), token };
-    },
-    getUserProfile: async (_, { id }) => {
-      return await User.findByPk(id);
-    },
-  },
-  Mutation: {
-    register: async (_, { username, email, password, firstName, lastName }) => {
-      const hashedPassword = await bcrypt.hash(password, 10);
-      const user = await User.create({
-        username,
-        email,
-        password: hashedPassword,
-        firstName,
-        lastName,
-      });
-
-      const token = jwt.sign({ userId: user.id }, secretKey);
-      return { ...user.toJSON(), token };
-    },
-    updateUserProfile: async (
-      _,
-      { id, profilePicture, address, siret, birthDate }
-    ) => {
-      const user = await User.findByPk(id);
-      if (!user) {
-        throw new Error("Utilisateur non retrouvé");
-      }
-
-      await user.update({ profilePicture, address, siret, birthDate });
-      return user;
-    },
-
-    uploadProfilePicture: async (_, { id, file }) => {
-      const user = await User.findByPk(id);
-      if (!user) {
-        throw new Error("Utilisateur non retrouvé");
-      }
-      const { createReadStream, filename, mimetype, encoding } = await file;
-      const stream = createReadStream();
-      // Générer un nom de fichier unique
-      const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-      const pathName = __dirname + `/uploads/${uniqueSuffix}-${filename}`;
-      await new Promise((resolve, reject) => {
-        const writeStream = fs.createWriteStream(pathName);
-        stream.pipe(writeStream);
-        stream.on("end", resolve);
-        stream.on("error", reject);
-      });
-
-      const profilePictureUrl = `/uploads/${uniqueSuffix}-${filename}`;
-      await user.update({ profilePicture: profilePictureUrl });
-      return user;
-    },
-  },
-};
-
-const getUser = (token) => {
   try {
-    if (token) {
-      return jwt.verify(token, secretKey);
-    }
-    return null;
-  } catch (err) {
-    return null;
+    const user = jwt.verify(token, secretKey);
+    req.user = user;
+    next();
+  } catch (error) {
+    return res.status(401).send({ message: "Token invalide" });
   }
 };
 
-// Initialiser Apollo Server
-async function startServer() {
-  const server = new ApolloServer({
-    typeDefs,
-    resolvers,
-    context: ({ req }) => {
-      const token = req.headers.authorization || "";
-      const user = getUser(token);
-      return { user };
-    },
-  });
-  await server.start();
-  server.applyMiddleware({ app });
+// Route pour l'enregistrement des utilisateurs
+app.post("/api/register", async (req, res) => {
+  const { username, email, password, firstName, lastName } = req.body;
 
-  sequelize.sync().then(() => {
-    app.listen({ port: port }, () => {
-      console.log(
-        `Serveur en cours sur http://localhost:${port}${server.graphqlPath}`
-      );
+  try {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = await User.create({
+      username,
+      email,
+      password: hashedPassword,
+      firstName,
+      lastName,
     });
+    const token = jwt.sign({ userId: user.id }, secretKey);
+    res.json({ ...user.toJSON(), token });
+  } catch (error) {
+    res.status(500).send({ message: "Erreur lors de l'enregistrement" });
+  }
+});
+
+// Route pour la connexion des utilisateurs
+app.post("/api/login", async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    const user = await User.findOne({ where: { username } });
+    if (!user) {
+      return res.status(404).send({ message: "Utilisateur non retrouvé" });
+    }
+
+    const valid = await bcrypt.compare(password, user.password);
+    if (!valid) {
+      return res.status(401).send({ message: "Mot de passe incorrect" });
+    }
+
+    const token = jwt.sign({ userId: user.id }, secretKey);
+    res.json({ ...user.toJSON(), token });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: "Erreur lors de la connexion" });
+  }
+});
+
+// Route pour obtenir le profil utilisateur
+app.get("/api/user/:id", authenticate, async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const user = await User.findByPk(id);
+    if (!user) {
+      return res.status(404).send({ message: "Utilisateur non retrouvé" });
+    }
+
+    res.json(user);
+  } catch (error) {
+    res
+      .status(500)
+      .send({
+        message: "Erreur lors de la récupération du profil utilisateur",
+      });
+  }
+});
+
+// Route pour mettre à jour le profil utilisateur
+app.put("/api/user/:id", authenticate, async (req, res) => {
+  const { id } = req.params;
+  const { profilePicture, address, siret, birthDate, phoneNumber } = req.body;
+
+  try {
+    const user = await User.findByPk(id);
+    if (!user) {
+      return res.status(404).send({ message: "Utilisateur non retrouvé" });
+    }
+
+    await user.update({
+      profilePicture,
+      address,
+      siret,
+      birthDate,
+      phoneNumber,
+    });
+    res.json(user);
+  } catch (error) {
+    res
+      .status(500)
+      .send({ message: "Erreur lors de la mise à jour du profil utilisateur" });
+  }
+});
+
+// Route pour uploader une photo de profil
+app.post(
+  "/api/user/:id/upload",
+  authenticate,
+  upload.single("file"),
+  async (req, res) => {
+    const { id } = req.params;
+    const file = req.file;
+
+    try {
+      const user = await User.findByPk(id);
+      if (!user) {
+        return res.status(404).send({ message: "Utilisateur non retrouvé" });
+      }
+
+      const profilePictureUrl = `/uploads/${file.filename}`;
+      await user.update({ profilePicture: profilePictureUrl });
+      res.json(user);
+    } catch (error) {
+      res
+        .status(500)
+        .send({ message: "Erreur lors de l'upload de la photo de profil" });
+    }
+  }
+);
+
+// Démarrage du serveur
+sequelize.sync().then(() => {
+  app.listen(port, () => {
+    console.log(`Serveur en cours sur http://localhost:${port}`);
   });
-}
-
-startServer();
-
-//exemple
-//login
-// query {
-// 	login(username: "donne12", password: "testpassword") {
-// 	  id
-// 	  username
-// 	  email
-// 	  firstName
-// 	  lastName
-// 	  token
-// 	}
-//}
-//register
-// mutation {
-// 	register(username: "donne12", email: "test@example.com", password: "testpassword", firstName: "John", lastName: "Doe") {
-// 	  id
-// 	  username
-// 	  email
-// 	  firstName
-// 	  lastName
-// 	  token
-// 	}
-//}
-//updateprofile
-// mutation {
-// 	updateUserProfile(id: 1, profilePicture: "newpicture.jpg", address: "123 Main St", iban: "DE1234567890", birthDate: "1990-01-01") {
-// 	  id
-// 	  username
-// 	  email
-// 	  firstName
-// 	  lastName
-// 	  profilePicture
-// 	  address
-// 	  siret
-// 	  birthDate
-// 	}
-// }
+});
