@@ -18,39 +18,38 @@ const getItemId = async (boardId, itemName) => {
 	    }
 	  }
 	`;
-}
-const variables = {
-	boardId: [ boardId ],  // Assurez-vous que boardId est un tableau contenant des chaînes
-};
+	const variables = {
+		boardId: [ boardId ],  // Assurez-vous que boardId est un tableau contenant des chaînes
+	};
 
-try {
-	const response = await axios.post(MONDAY_API_URL, {
-		query: query,
-		variables: variables
-	}, {
-		headers: {
-			'Content-Type': 'application/json',
-			'Authorization': MONDAY_API_KEY,
-		},
-	});
+	try {
+		const response = await axios.post(MONDAY_API_URL, {
+			query: query,
+			variables: variables
+		}, {
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': MONDAY_API_KEY,
+			},
+		});
 
-	if (response.data.errors) {
-		console.error('Erreur lors de la récupération des items : ', response.data.errors);
-		throw new Error('Erreur lors de la récupération des items.');
+		if (response.data.errors) {
+			console.error('Erreur lors de la récupération des items : ', response.data.errors);
+			throw new Error('Erreur lors de la récupération des items.');
+		}
+
+		const boards = response.data.data.boards;
+		if (boards.length > 0) {
+			const items = boards[ 0 ].items_page.items;
+			const item = items.find(i => i.name === itemName);
+			return item ? item.id : null;
+		} else {
+			return null;
+		}
+	} catch (error) {
+		console.error('Erreur lors de la récupération des items : ', error.message);
+		throw error;
 	}
-
-	const boards = response.data.data.boards;
-	if (boards.length > 0) {
-		const items = boards[ 0 ].items;
-		const item = items.find(i => i.name === itemName);
-		return item ? item.id : null;
-	} else {
-		return null;
-	}
-} catch (error) {
-	console.error('Erreur lors de la récupération des items : ', error.message);
-	throw error;
-}
 };
 
 // Route pour mettre à jour un champ d'un item
