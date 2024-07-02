@@ -5,15 +5,15 @@ const fs = require('fs');
 const path = require('path');
 const app = express();
 const port = 3001;
-const { ApolloServer, gql } = require("apollo-server-express");
 const sequelize = require("./config/database");
 const User = require("./models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const secretKey = "katapult_secret_key";
 const multer = require("multer");
 const path = require("path");
-const { GraphQLUpload } = require("graphql-upload");
+const fs = require("fs");
+
+const secretKey = "katapult_secret_key";
 
 // Configuration de multer pour les uploads
 const storage = multer.diskStorage({
