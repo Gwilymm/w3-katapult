@@ -32,14 +32,18 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  iban: {
+  siret: {
     type: DataTypes.STRING,
     allowNull: true,
   },
   birthDate: {
     type: DataTypes.DATE,
     allowNull: true,
-  }
+  },
+  phoneNumber: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
 }, {
   timestamps: false,
 });
