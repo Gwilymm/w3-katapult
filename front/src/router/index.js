@@ -8,7 +8,7 @@
 import { createRouter, createWebHistory } from 'vue-router/auto'
 import { setupLayouts } from 'virtual:generated-layouts'
 import profile from '../pages/profile.vue'
-import signin from '@/pages/signin.vue'
+import signup from '@/pages/signup.vue'
 
 const routes = [
   {
@@ -16,8 +16,8 @@ const routes = [
     component: profile
   },
   {
-    path: '/signin',
-    component: signin
+    path: '/signup',
+    component: signup
   }
 ]
 

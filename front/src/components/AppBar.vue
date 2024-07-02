@@ -5,8 +5,8 @@
         <v-app-bar-title>ADRESS Normandie Incabateur Katapult</v-app-bar-title>
     </div>
     <template v-slot:append>
-        <v-btn v-if="!isUserConnected" @click="signIn">Sign In</v-btn>
-        <v-btn v-else @click="goToProfile"  icon="mdi-account"></v-btn>
+        <v-btn  @click="goToSignUp">Sign Up</v-btn>
+        <v-btn  @click="goToProfile"  icon="mdi-account"></v-btn>
     </template>
   </v-app-bar>
   </template>
@@ -30,8 +30,8 @@
     router.push('/')
   }
 
-  function goToSignIn() {
-    router.push('/signin')
+  function goToSignUp() {
+    router.push('/signup')
   }
   </script>
 
