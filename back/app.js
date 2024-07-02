@@ -55,7 +55,8 @@ const typeDefs = gql`
     lastName: String!
     profilePicture: String
     address: String
-    iban: String
+    siret: String
+    phoneNumber: String
     birthDate: String
     token: String
   }
@@ -77,8 +78,9 @@ const typeDefs = gql`
       id: ID!
       profilePicture: String
       address: String
-      iban: String
+      siret: String
       birthDate: String
+      phoneNumber: String
     ): User
     uploadProfilePicture(id: ID!, file: Upload!): User
   }
@@ -122,14 +124,14 @@ const resolvers = {
     },
     updateUserProfile: async (
       _,
-      { id, profilePicture, address, iban, birthDate }
+      { id, profilePicture, address, siret, birthDate }
     ) => {
       const user = await User.findByPk(id);
       if (!user) {
         throw new Error("Utilisateur non retrouvé");
       }
 
-      await user.update({ profilePicture, address, iban, birthDate });
+      await user.update({ profilePicture, address, siret, birthDate });
       return user;
     },
 
@@ -204,7 +206,7 @@ startServer();
 // 	  lastName
 // 	  token
 // 	}
-//   }
+//}
 //register
 // mutation {
 // 	register(username: "donne12", email: "test@example.com", password: "testpassword", firstName: "John", lastName: "Doe") {
@@ -214,5 +216,19 @@ startServer();
 // 	  firstName
 // 	  lastName
 // 	  token
+// 	}
+//}
+//updateprofile
+// mutation {
+// 	updateUserProfile(id: 1, profilePicture: "newpicture.jpg", address: "123 Main St", iban: "DE1234567890", birthDate: "1990-01-01") {
+// 	  id
+// 	  username
+// 	  email
+// 	  firstName
+// 	  lastName
+// 	  profilePicture
+// 	  address
+// 	  siret
+// 	  birthDate
 // 	}
 // }
