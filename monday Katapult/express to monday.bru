@@ -1,0 +1,20 @@
+meta {
+  name: express to monday
+  type: http
+  seq: 5
+}
+
+post {
+  url: http://localhost:3000/api/mutation/create_item
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "board_id": "1550966743",  // Assurez-vous que board_id est une chaîne
+    "item_name":"Nouveau Dossier",
+    "column_values": "{ \"texte__1\": \"Doe\", \"texte9__1\": \"John\", \"e_mail41__1\": {\"email\": \"example@example.com\", \"text\": \"This is an example email\"}, \"t_l_phone__1\": {\"phone\": \"0295317575\", \"countryShortName\": \"FR\"}, \"lien_internet__1\": {\"url\": \"http://example.com\", \"text\": \"Example Link\"}, \"date__1\": \"2024-07-03\", \"date1__1\": \"2024-07-04\" }"
+  }
+  
+}
