@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-	const EconomicModel = sequelize.define('EconomicModel', {
+	const Economic = sequelize.define('EconomicModel', {
 		applicationId: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
@@ -33,5 +33,5 @@ module.exports = (sequelize, DataTypes) => {
 			allowNull: true,
 		}
 	});
-	return EconomicModel;
+	return Economic;
 };
