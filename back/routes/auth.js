@@ -51,7 +51,7 @@ const authenticate = (req, res, next) => {
 
 // Route pour l'enregistrement des utilisateurs
 router.post("/register", async (req, res) => {
-  const { username, email, password, firstName, lastName } = req.body;
+  const { username, email, password, firstName, lastName, address, birthDate, phoneNumber } = req.body;
   try {
     console.log(req.body);
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -62,7 +62,6 @@ router.post("/register", async (req, res) => {
       firstName,
       lastName,
       address,
-      siret,
       birthDate,
       phoneNumber,
     });
