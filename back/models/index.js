@@ -34,9 +34,6 @@ db.ProjectDetails.belongsTo(db.Application, { foreignKey: 'applicationId', as: '
 db.Application.hasOne(db.EconomicModel, { foreignKey: 'applicationId', as: 'economicModel' });
 db.EconomicModel.belongsTo(db.Application, { foreignKey: 'applicationId', as: 'application' });
 
-db.Application.hasOne(db.Stakeholders, { foreignKey: 'applicationId', as: 'stakeholders' });
-db.Stakeholders.belongsTo(db.Application, { foreignKey: 'applicationId', as: 'application' });
-
 db.Application.hasOne(db.TeamIntroduction, { foreignKey: 'applicationId', as: 'teamIntroduction' });
 db.TeamIntroduction.belongsTo(db.Application, { foreignKey: 'applicationId', as: 'application' });
 

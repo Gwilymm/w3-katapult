@@ -6,20 +6,32 @@ module.exports = (sequelize, DataTypes) => {
 		},
 		revenueSources: {
 			type: DataTypes.TEXT,
-			allowNull: false,
+			allowNull: true,
 		},
 		jobCreation: {
 			type: DataTypes.TEXT,
-			allowNull: false,
+			allowNull: true,
 		},
 		economicViability: {
 			type: DataTypes.TEXT,
-			allowNull: false,
+			allowNull: true,
 		},
 		diversificationProjects: {
 			type: DataTypes.TEXT,
-			allowNull: false,
+			allowNull: true,
 		},
+		partnerships: {
+			type: DataTypes.TEXT,
+			allowNull: true,
+		},
+		partnershipsResearch: {
+			type: DataTypes.TEXT,
+			allowNull: true,
+		},
+		stakeholderRoles: {
+			type: DataTypes.TEXT,
+			allowNull: true,
+		}
 	});
 	return EconomicModel;
 };
