@@ -53,6 +53,7 @@ const authenticate = (req, res, next) => {
 router.post("/register", async (req, res) => {
   const { username, email, password, firstName, lastName } = req.body;
   try {
+    console.log(req.body);
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await db.User.create({
       username,
@@ -60,6 +61,10 @@ router.post("/register", async (req, res) => {
       password: hashedPassword,
       firstName,
       lastName,
+      address,
+      siret,
+      birthDate,
+      phoneNumber,
     });
     const token = jwt.sign({ userId: user.id }, secretKey);
     res.json({ ...user.toJSON(), token });

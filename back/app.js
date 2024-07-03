@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const db = require('./models');
 const cors = require('cors'); // Assurez-vous d'importer CORS si nécessaire
-
+const fs = require('fs');
 const app = express();
 const port = 3000;
 
@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 // Servir les fichiers statiques de Vue.js
-app.use(express.static(path.join(__dirname, 'path/to/vue-project/dist')));
+app.use(express.static(path.join(__dirname, '../front/dist')));
 
 // Fonction pour charger dynamiquement les routes
 const loadRoutes = (app) => {
@@ -39,7 +39,7 @@ db.sequelize.sync({ alter: true }).then(() => {
 
 // Gérer les routes non-API en renvoyant `index.html`
 app.get('*', (req, res) => {
-	res.sendFile(path.join(__dirname, 'path/to/vue-project/dist/index.html'));
+	res.sendFile(path.join(__dirname, '../front/dist/index.html'));
 });
 
 // Démarrage du serveur
