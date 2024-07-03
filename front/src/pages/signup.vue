@@ -93,6 +93,7 @@ const user = ref({
 function submitSignUp() {
   ApiService.signUp(user.value)
     .then((response) => {
+      console.log("les couilles de réponse");
       console.log(response)
       router.push({ name: '/profile' })
     })
