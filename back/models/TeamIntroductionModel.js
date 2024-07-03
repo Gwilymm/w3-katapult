@@ -6,31 +6,31 @@ module.exports = (sequelize, DataTypes) => {
 		},
 		teamIntroduction: {
 			type: DataTypes.TEXT,
-			allowNull: false,
+			allowNull: true,
 		},
 		entrepreneurialExperience: {
 			type: DataTypes.TEXT,
-			allowNull: false,
+			allowNull: true,
 		},
 		inspirationalEntrepreneur: {
 			type: DataTypes.TEXT,
-			allowNull: false,
+			allowNull: true,
 		},
 		missingSkills: {
 			type: DataTypes.TEXT,
-			allowNull: false,
+			allowNull: true,
 		},
 		incubationParticipation: {
 			type: DataTypes.TEXT,
-			allowNull: false,
+			allowNull: true,
 		},
 		professionalSituation: {
 			type: DataTypes.TEXT,
-			allowNull: false,
+			allowNull: true,
 		},
 		incubationSchedule: {
 			type: DataTypes.TEXT,
-			allowNull: false,
+			allowNull: true,
 		},
 	});
 	return TeamIntroduction;

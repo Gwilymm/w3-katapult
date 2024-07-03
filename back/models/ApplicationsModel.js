@@ -23,7 +23,6 @@ module.exports = (sequelize, DataTypes) => {
 		Application.hasMany(models.ProjectTeam, { foreignKey: 'applicationId' });
 		Application.hasOne(models.ProjectDetails, { foreignKey: 'applicationId' });
 		Application.hasOne(models.EconomicModel, { foreignKey: 'applicationId' });
-		Application.hasOne(models.Stakeholders, { foreignKey: 'applicationId' });
 		Application.hasOne(models.TeamIntroduction, { foreignKey: 'applicationId' });
 	};
 
