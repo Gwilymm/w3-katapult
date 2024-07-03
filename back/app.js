@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const sequelize = require("./config/database.js");
 const fs = require('fs');
 const path = require('path');
 const app = express();
@@ -26,6 +27,8 @@ const loadRoutes = (app) => {
 loadRoutes(app);
 
 // Démarrage du serveur
-app.listen(port, () => {
-	console.log(`Serveur démarré sur http://localhost:${port}`);
+sequelize.sync().then(() => {
+	app.listen(port, () => {
+		console.log(`Serveur démarré sur http://localhost:${port}`);
+	});
 });

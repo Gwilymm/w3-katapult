@@ -12,11 +12,14 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.DATE,
 			defaultValue: DataTypes.NOW,
 		},
+		createdAt: {
+			type: DataTypes.DATE,
+			defaultValue: DataTypes.NOW,
+		}
 	});
 
-	// Define relationships
 	Application.associate = (models) => {
-		Application.belongsTo(models.User, { foreignKey: 'userId' });
+		Application.belongsTo(models.User, { foreignKey: 'userId', as: 'User' });
 		Application.hasMany(models.ProjectTeam, { foreignKey: 'applicationId' });
 		Application.hasOne(models.ProjectDetails, { foreignKey: 'applicationId' });
 		Application.hasOne(models.EconomicModel, { foreignKey: 'applicationId' });
