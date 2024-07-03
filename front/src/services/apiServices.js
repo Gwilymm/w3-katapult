@@ -17,4 +17,9 @@ export class ApiService {
         const response = await apiService.post('/auth/register', user);
         console.log(response.data);
     }
+
+    static async login (user) {
+        const response = await apiService.post('/auth/login', user);
+        console.log(response.data);
+    }
 }
