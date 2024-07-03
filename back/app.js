@@ -1,23 +1,34 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const fs = require('fs');
+const path = require('path');
+const sequelize = require("./config/database");
 const app = express();
 const port = 3000;
 
 // Middleware pour parser les requêtes POST
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Route pour afficher le formulaire
-app.get('../front', (req, res) => {
-	res.render('index');
-});
+// Fonction pour charger dynamiquement les routes
+const loadRoutes = (app) => {
+	const routesPath = path.join(__dirname, 'routes');
+	fs.readdirSync(routesPath).forEach((file) => {
+		if (file.endsWith('.js')) {
+			const route = require(path.join(routesPath, file));
+			const routeName = file.split('.')[ 0 ];
+			console.log(`Chargement de la route /api/${routeName}`);
+			app.use(`/api/${routeName}`, route);
+		}
+	});
+};
 
-// Route pour gérer la soumission du formulaire
-app.post('/submit', (req, res) => {
-	const { name, email, message } = req.body;
-	res.send(`Formulaire soumis avec succès !<br>Nom: ${name}<br>Email: ${email}<br>Message: ${message}`);
-});
+// Charger les routes
+loadRoutes(app);
 
 // Démarrage du serveur
-app.listen(port, () => {
-	console.log(`Serveur démarré sur http://localhost:${port}`);
+sequelize.sync().then(() => {
+	app.listen(port, () => {
+		console.log(`Serveur en cours sur http://localhost:${port}`);
+	});
 });

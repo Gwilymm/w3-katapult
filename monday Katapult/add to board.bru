@@ -1,0 +1,29 @@
+meta {
+  name: add to board
+  type: graphql
+  seq: 3
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{Bearer}}
+}
+
+body:graphql {
+  mutation {
+    create_item(
+      board_id: 1550966743,
+      item_name: "Nouveau Client",
+      column_values: "{ \"texte__1\": \"Doe\", \"texte9__1\": \"John\", \"e_mail41__1\": \"{\\\"email\\\": \\\"john.doe@example.com\\\", \\\"text\\\": \\\"John Doe\\\"}\", \"t_l_phone__1\": \"{\\\"phone\\\": \\\"0295317575\\\", \\\"countryShortName\\\": \\\"FR\\\"}\", \"lien_internet__1\": \"{\\\"url\\\": \\\"http://example.com\\\", \\\"text\\\": \\\"Example Link\\\"}\", \"date__1\": \"2024-07-03\", \"date1__1\": \"2024-07-04\" }"
+    ) {
+      id
+      name
+    }
+  }
+  
+}
