@@ -4,7 +4,7 @@
       <v-row justify="center">
         <v-col cols="12" md="8">
           <App-Bar></App-Bar>
-          <v-form @submit.prevent="signUp">
+          <v-form @submit.prevent ="submitSignUp">
             <v-text-field
               v-model="user.username"
               label="Username"
@@ -47,8 +47,14 @@
               prepend-icon="mdi-home"
             ></v-text-field>
             <v-text-field
-              v-model="user.iban"
-              label="Siret"
+            v-model="user.phoneNumber"
+            label="Numero de telephone"
+            prepend-icon="mdi-phone"
+            >
+            </v-text-field>
+            <v-text-field
+              v-model="user.siret"
+              label="siret"
               prepend-icon="mdi-bank"
             ></v-text-field>
             <v-text-field
@@ -67,6 +73,7 @@
 
 <script setup>
 import { ref } from 'vue';
+import { ApiService } from '@/services/apiServices';
 
 const user = ref({
   username: '',
@@ -76,12 +83,22 @@ const user = ref({
   lastName: '',
   profilePicture: '',
   address: '',
-  iban: '',
+  phoneNumber: '',
+  siret: '',
   birthDate: '',
 })
-  function signUp(user) {
-  console.log("User Data:", user);
+
+
+function submitSignUp() {
+  ApiService.signUp(user.value)
+    .then((response) => {
+      console.log(response)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
 }
+
 </script>
 
 <style scoped>
