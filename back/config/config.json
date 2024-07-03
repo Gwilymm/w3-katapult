@@ -1,0 +1,25 @@
+{
+	"development": {
+	  "username": "user",
+	  "password": "userpassword",
+	  "database": "application_db",
+	  "host": "localhost",
+	  "dialect": "mysql",
+	  "port": 9090
+	},
+	"test": {
+	  "username": "user",
+	  "password": "userpassword",
+	  "database": "application_db",
+	  "host": "mysql",
+	  "dialect": "mysql"
+	},
+	"production": {
+	  "username": "user",
+	  "password": "userpassword",
+	  "database": "application_db",
+	  "host": "mysql",
+	  "dialect": "mysql"
+	}
+   }
+   

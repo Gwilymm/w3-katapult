@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const mutationRoutes = require('./routes/mutation');
-const updateRoutes = require('./routes/update');
+const fs = require('fs');
+const path = require('path');
 const app = express();
 const port = 3000;
 
@@ -9,9 +9,21 @@ const port = 3000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Routes
-app.use('/api/mutation', mutationRoutes);
-app.use('/api/update', updateRoutes);
+// Fonction pour charger dynamiquement les routes
+const loadRoutes = (app) => {
+	const routesPath = path.join(__dirname, 'routes');
+	fs.readdirSync(routesPath).forEach((file) => {
+		if (file.endsWith('.js')) {
+			const route = require(path.join(routesPath, file));
+			const routeName = file.split('.')[ 0 ];
+			console.log(`Chargement de la route /api/${routeName}`);
+			app.use(`/api/${routeName}`, route);
+		}
+	});
+};
+
+// Charger les routes
+loadRoutes(app);
 
 // Démarrage du serveur
 app.listen(port, () => {
