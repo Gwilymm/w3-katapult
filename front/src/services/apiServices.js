@@ -16,7 +16,5 @@ export class ApiService {
         console.log(user);
         const response = await apiService.post('/auth/register', user);
         console.log(response.data);
-
-
     }
 }

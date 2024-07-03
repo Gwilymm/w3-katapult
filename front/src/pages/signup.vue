@@ -74,6 +74,7 @@
 <script setup>
 import { ref } from 'vue';
 import { ApiService } from '@/services/apiServices';
+import router from '@/router';
 
 const user = ref({
   username: '',
@@ -93,6 +94,7 @@ function submitSignUp() {
   ApiService.signUp(user.value)
     .then((response) => {
       console.log(response)
+      router.push({ name: '/profile' })
     })
     .catch((error) => {
       console.log(error)
