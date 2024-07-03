@@ -1,36 +1,21 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const sequelize = require("./config/database.js");
-const fs = require('fs');
 const path = require('path');
+const db = require('./models');
+const cors = require('cors'); // Assurez-vous d'importer CORS si nécessaire
+
 const app = express();
-const port = 3001;
-const sequelize = require("./config/database");
-const { ApolloServer, gql } = require("apollo-server-express");
-const sequelize = require("./config/database");
-const User = require("./models/user");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const secretKey = "katapult_secret_key";
-const multer = require("multer");
-const path = require("path");
-const { GraphQLUpload } = require("graphql-upload");
-
-// Configuration de multer pour les uploads
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/");
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname)); // Ajouter une timestamp pour éviter les conflits de noms
-  },
-});
-
-const upload = multer({ storage: storage });
+const port = 3000;
 
 // Middleware pour parser les requêtes POST
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Middleware CORS
+app.use(cors());
+
+// Servir les fichiers statiques de Vue.js
+app.use(express.static(path.join(__dirname, 'path/to/vue-project/dist')));
 
 // Fonction pour charger dynamiquement les routes
 const loadRoutes = (app) => {
@@ -39,7 +24,6 @@ const loadRoutes = (app) => {
 		if (file.endsWith('.js')) {
 			const route = require(path.join(routesPath, file));
 			const routeName = file.split('.')[ 0 ];
-			console.log(`Chargement de la route /api/${routeName}`);
 			app.use(`/api/${routeName}`, route);
 		}
 	});
@@ -48,9 +32,17 @@ const loadRoutes = (app) => {
 // Charger les routes
 loadRoutes(app);
 
+// Synchronisation des modèles avec la base de données
+db.sequelize.sync({ alter: true }).then(() => {
+	console.log('Database & tables created/updated!');
+});
+
+// Gérer les routes non-API en renvoyant `index.html`
+app.get('*', (req, res) => {
+	res.sendFile(path.join(__dirname, 'path/to/vue-project/dist/index.html'));
+});
+
 // Démarrage du serveur
-sequelize.sync().then(() => {
-	app.listen(port, () => {
-		console.log(`Serveur démarré sur http://localhost:${port}`);
-	});
+app.listen(port, () => {
+	console.log(`Serveur démarré sur http://localhost:${port}`);
 });
