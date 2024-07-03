@@ -1,13 +1,14 @@
 const express = require("express");
-const db = require("../config/database");
+const db = require('../models');
 const router = express.Router();
 const app = express();
-const User = require("../models/user");
+const User = require("../models/UserModel.js");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const path = require("path");
 const secretKey = "katapult_secret_key";
+
 
 // Configuration de multer pour les uploads
 const storage = multer.diskStorage({
@@ -27,7 +28,7 @@ app.use(express.json());
 
 // Middleware pour charger dynamiquement les routes
 router.get("/", async (req, res) => {
-   res.send("Hello World");
+  res.send("Hello World");
 });
 
 // Pour servir les fichiers statiques
@@ -53,7 +54,7 @@ router.post("/register", async (req, res) => {
   const { username, email, password, firstName, lastName } = req.body;
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await User.create({
+    const user = await db.User.create({
       username,
       email,
       password: hashedPassword,
@@ -63,6 +64,7 @@ router.post("/register", async (req, res) => {
     const token = jwt.sign({ userId: user.id }, secretKey);
     res.json({ ...user.toJSON(), token });
   } catch (error) {
+    console.log(error);
     res.status(500).send({ message: "Erreur lors de l'enregistrement" });
   }
 });
@@ -72,7 +74,7 @@ router.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    const user = await User.findOne({ where: { username } });
+    const user = await db.User.findOne({ where: { username } });
     if (!user) {
       return res.status(404).send({ message: "Utilisateur non retrouvé" });
     }
@@ -95,7 +97,7 @@ router.get("/user/:id", authenticate, async (req, res) => {
   const { id } = req.params;
 
   try {
-    const user = await User.findByPk(id);
+    const user = await db.User.findByPk(id);
     if (!user) {
       return res.status(404).send({ message: "Utilisateur non retrouvé" });
     }
@@ -161,6 +163,6 @@ router.post(
 );
 
 // Générer le PDF
-router.get("/user/:id/pdf", authenticate, async (req, res) => {});
+router.get("/user/:id/pdf", authenticate, async (req, res) => { });
 
 module.exports = router;
