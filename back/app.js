@@ -1,165 +1,30 @@
-const express = require("express");
-const app = express();
-const port = 3001;
+const express = require('express');
+const bodyParser = require('body-parser');
+const fs = require('fs');
+const path = require('path');
 const sequelize = require("./config/database");
-const User = require("./models/user");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const multer = require("multer");
-const path = require("path");
-const fs = require("fs");
-
-const secretKey = "katapult_secret_key";
-
-// Configuration de multer pour les uploads
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/");
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname)); // Ajouter une timestamp pour éviter les conflits de noms
-  },
-});
-
-const upload = multer({ storage: storage });
+const app = express();
+const port = 3000;
 
 // Middleware pour parser les requêtes POST
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-// Pour servir les fichiers statiques
-app.use("/api/uploads", express.static(path.join(__dirname, "uploads")));
-
-// Middleware pour vérifier le token JWT
-const authenticate = (req, res, next) => {
-  const token = req.headers.authorization;
-  if (!token) {
-    return res.status(401).send({ message: "Token manquant" });
-  }
-
-  try {
-    const user = jwt.verify(token, secretKey);
-    req.user = user;
-    next();
-  } catch (error) {
-    return res.status(401).send({ message: "Token invalide" });
-  }
+// Fonction pour charger dynamiquement les routes
+const loadRoutes = (app) => {
+	const routesPath = path.join(__dirname, 'routes');
+	fs.readdirSync(routesPath).forEach((file) => {
+		if (file.endsWith('.js')) {
+			const route = require(path.join(routesPath, file));
+			const routeName = file.split('.')[0];
+			console.log(`Chargement de la route /api/${routeName}`);
+			app.use(`/api/${routeName}`, route);
+		}
+	});
 };
 
-// Route pour l'enregistrement des utilisateurs
-app.post("/api/register", async (req, res) => {
-  const { username, email, password, firstName, lastName } = req.body;
-
-  try {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await User.create({
-      username,
-      email,
-      password: hashedPassword,
-      firstName,
-      lastName,
-    });
-    const token = jwt.sign({ userId: user.id }, secretKey);
-    res.json({ ...user.toJSON(), token });
-  } catch (error) {
-    res.status(500).send({ message: "Erreur lors de l'enregistrement" });
-  }
-});
-
-// Route pour la connexion des utilisateurs
-app.post("/api/login", async (req, res) => {
-  const { username, password } = req.body;
-
-  try {
-    const user = await User.findOne({ where: { username } });
-    if (!user) {
-      return res.status(404).send({ message: "Utilisateur non retrouvé" });
-    }
-
-    const valid = await bcrypt.compare(password, user.password);
-    if (!valid) {
-      return res.status(401).send({ message: "Mot de passe incorrect" });
-    }
-
-    const token = jwt.sign({ userId: user.id }, secretKey);
-    res.json({ ...user.toJSON(), token });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({ message: "Erreur lors de la connexion" });
-  }
-});
-
-// Route pour obtenir le profil utilisateur
-app.get("/api/user/:id", authenticate, async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    const user = await User.findByPk(id);
-    if (!user) {
-      return res.status(404).send({ message: "Utilisateur non retrouvé" });
-    }
-
-    res.json(user);
-  } catch (error) {
-    res
-      .status(500)
-      .send({
-        message: "Erreur lors de la récupération du profil utilisateur",
-      });
-  }
-});
-
-// Route pour mettre à jour le profil utilisateur
-app.put("/api/user/:id", authenticate, async (req, res) => {
-  const { id } = req.params;
-  const { profilePicture, address, siret, birthDate, phoneNumber } = req.body;
-
-  try {
-    const user = await User.findByPk(id);
-    if (!user) {
-      return res.status(404).send({ message: "Utilisateur non retrouvé" });
-    }
-
-    await user.update({
-      profilePicture,
-      address,
-      siret,
-      birthDate,
-      phoneNumber,
-    });
-    res.json(user);
-  } catch (error) {
-    res
-      .status(500)
-      .send({ message: "Erreur lors de la mise à jour du profil utilisateur" });
-  }
-});
-
-// Route pour uploader une photo de profil
-app.post(
-  "/api/user/:id/upload",
-  authenticate,
-  upload.single("file"),
-  async (req, res) => {
-    const { id } = req.params;
-    const file = req.file;
-
-    try {
-      const user = await User.findByPk(id);
-      if (!user) {
-        return res.status(404).send({ message: "Utilisateur non retrouvé" });
-      }
-
-      const profilePictureUrl = `/uploads/${file.filename}`;
-      await user.update({ profilePicture: profilePictureUrl });
-      res.json(user);
-    } catch (error) {
-      res
-        .status(500)
-        .send({ message: "Erreur lors de l'upload de la photo de profil" });
-    }
-  }
-);
+// Charger les routes
+loadRoutes(app);
 
 // Démarrage du serveur
 sequelize.sync().then(() => {
