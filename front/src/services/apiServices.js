@@ -29,5 +29,15 @@ export class ApiService {
             throw error;
         }
     }
+
+    static async logout() {
+        try {
+            useAuthStore().deleteToken("token");
+            console.log('Logged out successfully');
+        } catch (error) {
+            console.error('Failed to logout', error);
+            throw error;
+        }
+    }
 }
 

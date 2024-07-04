@@ -8,6 +8,7 @@
       <v-btn v-if="!isUserConnected" @click="goToSignUp">S'inscrire</v-btn>
       <v-btn v-if="!isUserConnected" @click="goToLogin">Se connecter</v-btn>
       <v-btn v-if="isUserConnected" @click="goToProfile" icon="mdi-account"></v-btn>
+      <v-btn v-if="isUserConnected" @click="logout" icon="mdi-logout"></v-btn>
     </template>
   </v-app-bar>
 </template>
@@ -35,6 +36,15 @@ function goToSignUp() {
 
 function goToLogin() {
   router.push('/login');
+}
+
+async function logout() {
+  try {
+    await authStore.logout();
+    goToHome(); 
+  } catch (error) {
+    console.error('Logout failed', error);
+  }
 }
 </script>
 <style scoped>
