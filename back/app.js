@@ -49,19 +49,17 @@ const loadRoutes = (app) => {
 loadRoutes(app);
 
 // Synchronisation des modèles avec la base de données
-db.sequelize.sync({ alter: true }).then(() => {
-	console.log('Database & tables created/updated!');
+db.sequelize.sync().then(() => {
+    console.log('Database & tables created/updated!');
 });
 
 // Gérer les routes non-API en renvoyant `index.html`
 app.get('*', (req, res) => {
-	res.sendFile(path.join(__dirname, '../front/dist/index.html'));
+    res.sendFile(path.join(__dirname, '../front/dist/index.html'));
 });
 
 
-// Démarrage du serveur
-sequelize.sync().then(() => {
-	app.listen(port, () => {
-		console.log(`Serveur en cours sur http://localhost:${port}`);
-	});
+
+app.listen(port, () => {
+    console.log(`Serveur en cours sur http://localhost:${port}`);
 });
