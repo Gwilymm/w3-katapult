@@ -9,7 +9,7 @@
               <p>
                 Nous lançons un appel à projets pour l'année 2024. Découvrez les conditions et participez pour transformer vos idées innovantes en réalité.
               </p>
-              <v-btn class="red-btn"  @click="goToFormulaire">S'inscrire</v-btn>
+              <v-btn class="red-btn"  @click="handleDialoge">S'inscrire</v-btn>
             </v-col>
           </v-row>
 
@@ -56,7 +56,7 @@
               <p>
                 Pour postuler, remplissez le formulaire de candidature disponible sur notre site. Notre équipe examinera votre projet et vous contactera pour un entretien.
               </p>
-              <v-btn class="red-btn" @click="goToFormulaire">S'inscrire</v-btn>
+              <v-btn class="red-btn" @click="handleDialoge">S'inscrire</v-btn>
             </v-col>
           </v-row>
         </v-container>
@@ -67,6 +67,11 @@
 
 <script setup>
 import router from '@/router';
+import { useAuthStore } from '@/stores/authStore';
+
+const authStore = useAuthStore();
+const isUserConnected = computed(() => authStore.isAuthenticated);
+const authDialog = ref(null);
 
 function goToFormulaire(){
   router.push('/formulaire')
