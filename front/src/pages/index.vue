@@ -9,7 +9,7 @@
               <p>
                 Nous lançons un appel à projets pour l'année 2024. Découvrez les conditions et participez pour transformer vos idées innovantes en réalité.
               </p>
-              <v-btn class="red-btn"  @click="handleDialog">S'inscrire</v-btn>
+              <v-btn class="red-btn" @click="handleDialog">S'inscrire</v-btn>
             </v-col>
           </v-row>
 
@@ -61,12 +61,13 @@
           </v-row>
         </v-container>
       </v-container>
+      <ModalForm :isActive="isDialogActive" @close="isDialogActive = false" />
     </v-main>
   </v-app>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import router from '@/router';
 import { useAuthStore } from '@/stores/authStore';
 import ModalForm from '@/components/ModalForm.vue';
