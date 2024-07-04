@@ -34,4 +34,5 @@ module.exports = (sequelize, DataTypes) => {
 		}
 	});
 	return EconomicModel;
+
 };

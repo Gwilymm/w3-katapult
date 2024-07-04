@@ -4,6 +4,7 @@ const path = require('path');
 const db = require('./models');
 const cors = require('cors'); // Assurez-vous d'importer CORS si nécessaire
 const fs = require('fs');
+const sequelize = require("./config/database");
 const app = express();
 const port = 3000;
 
@@ -17,6 +18,7 @@ app.use(cors());
 // Servir les fichiers statiques de Vue.js
 app.use(express.static(path.join(__dirname, '../front/dist')));
 
+
 // Fonction pour charger dynamiquement les routes
 const loadRoutes = (app) => {
 	const routesPath = path.join(__dirname, 'routes');
@@ -24,6 +26,8 @@ const loadRoutes = (app) => {
 		if (file.endsWith('.js')) {
 			const route = require(path.join(routesPath, file));
 			const routeName = file.split('.')[ 0 ];
+
+			console.log(`Chargement de la route /api/${routeName}`);
 			app.use(`/api/${routeName}`, route);
 		}
 	});
@@ -42,7 +46,10 @@ app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname, '../front/dist/index.html'));
 });
 
+
 // Démarrage du serveur
-app.listen(port, () => {
-	console.log(`Serveur démarré sur http://localhost:${port}`);
+sequelize.sync().then(() => {
+	app.listen(port, () => {
+		console.log(`Serveur en cours sur http://localhost:${port}`);
+	});
 });

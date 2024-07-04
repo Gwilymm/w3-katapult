@@ -5,7 +5,8 @@ meta {
 }
 
 post {
-  url: {{url}}
+
+  url: http://localhost:3000/api/monday/create_item
   body: graphql
   auth: bearer
 }
@@ -19,7 +20,8 @@ body:graphql {
     create_item(
       board_id: 1550966743,
       item_name: "Nouveau Client",
-      column_values: "{ \"texte__1\": \"Doe\", \"texte9__1\": \"John\", \"e_mail41__1\": \"{\\\"email\\\": \\\"john.doe@example.com\\\", \\\"text\\\": \\\"John Doe\\\"}\", \"t_l_phone__1\": \"{\\\"phone\\\": \\\"0295317575\\\", \\\"countryShortName\\\": \\\"FR\\\"}\", \"lien_internet__1\": \"{\\\"url\\\": \\\"http://example.com\\\", \\\"text\\\": \\\"Example Link\\\"}\", \"date__1\": \"2024-07-03\", \"date1__1\": \"2024-07-04\" }"
+
+      column_values: "{\\"texte__1\\":\\"Doe\\",\\"texte9__1\\":\\"John\\",\\"e_mail41__1\\":\\"{\\\\\\"email\\\\\\":\\\\\\"john.doe@example.com\\\\\\",\\\\\\"text\\\\\\":\\\\\\"John Doe\\\\\\"}\\",\\"t_l_phone__1\\":\\"{\\\\\\"phone\\\\\\":\\\\\\"0295317575\\\\\\",\\\\\\"countryShortName\\\\\\":\\\\\\"FR\\\\\\"}\\",\\"date__1\\":\\"1990-01-01\\",\\"date1__1\\":\\"2024-07-04\\"}"
     ) {
       id
       name

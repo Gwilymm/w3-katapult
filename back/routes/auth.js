@@ -7,8 +7,9 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const path = require("path");
-const secretKey = "katapult_secret_key";
 
+const axios = require("axios"); // Assurez-vous que axios est importé
+const secretKey = "katapult_secret_key";
 
 // Configuration de multer pour les uploads
 const storage = multer.diskStorage({
@@ -53,7 +54,6 @@ const authenticate = (req, res, next) => {
 router.post("/register", async (req, res) => {
   const { username, email, password, firstName, lastName, address, birthDate, phoneNumber } = req.body;
   try {
-    console.log(req.body);
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await db.User.create({
       username,
@@ -63,10 +63,35 @@ router.post("/register", async (req, res) => {
       lastName,
       address,
       birthDate,
-      phoneNumber,
+      phoneNumber
     });
     const token = jwt.sign({ userId: user.id }, secretKey);
+
+    // Créer un nouvel item dans le tableau Monday.com
+    const board_id = '1550966743'; // Remplacez par l'ID de votre tableau Monday.com
+    const column_values = {
+      texte__1: lastName,
+      texte9__1: firstName,
+      e_mail5__1: email,
+      t_l_phone8__1: phoneNumber,
+      date__1: birthDate,
+      date1__1: new Date().toISOString().split('T')[ 0 ]
+    };
+
+    JSON.stringify(column_values);
+
+    // Utiliser axios pour appeler la route create_item
+    await axios.post('http://localhost:3000/api/monday/create_item', { board_id, column_values }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer votre_token' // Remplacez par votre token si nécessaire
+      }
+    });
+    // log axios and monday.com response
+
+
     res.json({ ...user.toJSON(), token });
+
   } catch (error) {
     console.log(error);
     res.status(500).send({ message: "Erreur lors de l'enregistrement" });
