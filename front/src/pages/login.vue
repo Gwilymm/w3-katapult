@@ -40,6 +40,7 @@
     ApiService.login(loginDetails.value)
       .then((response) => {
         console.log(response)
+        router.push({ path: '/' })
       })
       .catch((error) => {
         console.log(error)
