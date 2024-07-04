@@ -21,7 +21,7 @@
               (chiffres parlants à l’appui si vous en avez) !  (environ 20 lignes)"
       >
         <v-textarea
-          v-model="formData.difference"
+          v-model="formData.ampleur"
           :rules="[rules.required]"
           label="
               "
@@ -79,10 +79,10 @@ const valid = ref(false);
 const formData = reactive({
   projectDescription:'',
   resume:'',
-  difference:'',
+  ampleur:'',
   socialUtility:'',
   solution:'',
-  solution:'',
+  difference:'',
   indicateurs:''
 })
 const rules = {
