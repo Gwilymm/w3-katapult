@@ -7,6 +7,24 @@
 // Composables
 import { createRouter, createWebHistory } from 'vue-router/auto'
 import { setupLayouts } from 'virtual:generated-layouts'
+import profile from '../pages/profile.vue'
+import signup from '@/pages/signup.vue'
+import login from '@/pages/login.vue'
+
+const routes = [
+  {
+    path: '/profile',
+    component: profile
+  },
+  {
+    path: '/signup',
+    component: signup
+  }, 
+  {
+    path: '/login',
+    component: login
+  }
+]
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

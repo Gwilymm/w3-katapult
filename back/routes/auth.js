@@ -7,6 +7,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const path = require("path");
+
 const axios = require("axios"); // Assurez-vous que axios est importé
 const secretKey = "katapult_secret_key";
 
