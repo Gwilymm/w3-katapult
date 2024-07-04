@@ -4,23 +4,22 @@ const router = express.Router();
 
 const MONDAY_API_URL = 'https://api.monday.com/v2';
 const MONDAY_API_KEY = 'eyJhbGciOiJIUzI1NiJ9.eyJ0aWQiOjM3OTMzNzQ1NCwiYWFpIjoxMSwidWlkIjo2MjkyMjE1NCwiaWFkIjoiMjAyNC0wNy0wMlQwODo1OTozNC41NjNaIiwicGVyIjoibWU6d3JpdGUiLCJhY3RpZCI6MjQyMjk0NzYsInJnbiI6ImV1YzEifQ.kdG6KdOjz9XhO3J4aOz89m1wMd_rAND25BwkM0vTiHY';  // Remplacez par votre clé API
+
 // Fonction pour obtenir l'ID de l'item basé sur le nom de l'item
 const getItemId = async (boardId, itemName) => {
 	const query = `
-	  query ($boardId: [ID!]) {
-	    boards(ids: $boardId) {
-		 items_page(limit: 100) {
-		   items {
-			id
-			name
-		   }
-		 }
-	    }
-	  }
-	`;
-	const variables = {
-		boardId: [ boardId ],  // Assurez-vous que boardId est un tableau contenant des chaînes
-	};
+        query ($boardId: [ID!]) {
+            boards(ids: $boardId) {
+                items_page(limit: 100) {
+                    items {
+                        id
+                        name
+                    }
+                }
+            }
+        }
+    `;
+	const variables = { boardId: [ boardId ] };
 
 	try {
 		const response = await axios.post(MONDAY_API_URL, {
@@ -52,6 +51,7 @@ const getItemId = async (boardId, itemName) => {
 	}
 };
 
+
 // Route pour mettre à jour un champ d'un item
 router.post('/update_item', async (req, res) => {
 	try {
@@ -81,13 +81,17 @@ router.post('/update_item', async (req, res) => {
 		 }
 	    }
 	  `;
+		// if value is a date, we need to convert it to a string
 
 		const variables = {
 			boardId: board_id,
 			itemId: item_id,
 			columnId: column_id,
-			value: JSON.stringify(value)  // Convert to JSON string
+			value: value  // Convert to JSON string without double quotes
 		};
+
+		console.log('variables', variables);
+
 
 		const response = await axios.post(MONDAY_API_URL, {
 			query: query,
