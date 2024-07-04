@@ -41,7 +41,23 @@ router.get('/', async (req, res) => {
 		res.status(500).json({ message: 'Erreur lors de la récupération des introductions de l\'équipe', error: error.message });
 	}
 });
+router.get('/application/:applicationId', async (req, res) => {
+	const { applicationId } = req.params;
 
+	try {
+		const TeamIntroduction = await TeamIntroduction.findAll({
+			where: { applicationId: applicationId }
+		});
+
+		if (TeamIntroduction.length > 0) {
+			res.status(200).json(TeamIntroduction);
+		} else {
+			res.status(404).json({ message: 'Aucun détail de projet trouvé pour cette application.' });
+		}
+	} catch (error) {
+		res.status(500).json({ message: 'Erreur lors de la récupération des détails du projet', error: error.message });
+	}
+});
 // Get TeamIntroduction by ID
 router.get('/:id', async (req, res) => {
 	const { id } = req.params;

@@ -74,8 +74,7 @@ router.post("/register", async (req, res) => {
       texte9__1: firstName,
       e_mail5__1: email,
       t_l_phone8__1: phoneNumber,
-      date__1: birthDate,
-      date1__1: new Date().toISOString().split('T')[ 0 ]
+      date__1: new Date().toISOString().split('T')[ 0 ]
     };
 
     JSON.stringify(column_values);
