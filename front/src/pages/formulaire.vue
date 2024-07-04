@@ -81,7 +81,7 @@ const submitForm = () => {
     ...JSON.parse(localStorage.getItem("step5")),
     ...JSON.parse(localStorage.getItem("step6")),
   };
-  console.log("Form data:", formData);
+  // console.log("Form data:", formData);
 };
 
 const saveForm = () => {

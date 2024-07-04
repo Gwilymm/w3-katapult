@@ -38,7 +38,7 @@
   async function submitLogin() {
     ApiService.login(loginDetails.value)
       .then((response) => {
-        console.log(response)
+        // console.log(response)
         router.push({ path: '/' })
       })
       .catch((error) => {
