@@ -1,7 +1,8 @@
 <template>
   <v-app-bar :elevation="2">
-    <v-container>
-      <v-app-bar-nav-icon @click="goToHome"></v-app-bar-nav-icon>
+    <v-container class="iconTxt">
+      <v-icon icon="mdi mdi-home" @click="goToHome" color="red"></v-icon>
+      <!-- <v-app-bar-nav-icon @click="goToHome"></v-app-bar-nav-icon> -->
       <v-app-bar-title class="ml-3">ADRESS Normandie Incubateur Katapult</v-app-bar-title>
     </v-container>
     <template v-slot:append>
@@ -37,6 +38,10 @@ function goToLogin() {
   router.push('/login');
 }
 </script>
-
-<style>
+<style scoped>
+.iconTxt {
+  display: flex;
+  width: 80%;
+  justify-content: space-around;
+}
 </style>

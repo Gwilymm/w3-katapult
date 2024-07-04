@@ -3,7 +3,6 @@
       <v-container>
         <v-row justify="center">
           <v-col cols="12" md="6">
-            <App-Bar></App-Bar>
             <v-form @submit.prevent="submitLogin">
               <v-text-field
                 v-model="loginDetails.username"
@@ -25,17 +24,17 @@
       </v-container>
     </v-app>
   </template>
-  
+
   <script setup>
   import { ref } from 'vue';
   import { ApiService } from '@/services/apiServices';
   import router from '@/router';
-  
+
   const loginDetails = ref({
     username: '',
     password: '',
   })
-  
+
   async function submitLogin() {
     ApiService.login(loginDetails.value)
       .then((response) => {
@@ -47,7 +46,7 @@
       })
   }
   </script>
-  
+
   <style scoped>
   v-container {
     height: 100vh;
@@ -55,9 +54,8 @@
     align-items: center;
     justify-content: center;
   }
-  
+
   v-row {
     width: 100%;
   }
   </style>
-  

@@ -2,8 +2,6 @@
   <v-app>
     <v-main>
       <v-container fluid>
-        <App-Bar></App-Bar>
-
         <v-container class="fill-height align-center justify-center">
           <v-row>
             <v-col cols="12" md="6" lg="6" class="text-center mx-auto">
@@ -11,10 +9,10 @@
               <p>
                 Nous lançons un appel à projets pour l'année 2024. Découvrez les conditions et participez pour transformer vos idées innovantes en réalité.
               </p>
-              <v-btn class="red-btn">S'inscrire</v-btn>
+              <v-btn class="red-btn"  @click="goToFormulaire">S'inscrire</v-btn>
             </v-col>
           </v-row>
-          
+
           <v-row class="ml-lg-5 ml-xl-10">
             <v-col cols="4" md="6">
               <h2>Qu'est-ce que Katapult ?</h2>
@@ -58,7 +56,7 @@
               <p>
                 Pour postuler, remplissez le formulaire de candidature disponible sur notre site. Notre équipe examinera votre projet et vous contactera pour un entretien.
               </p>
-              <v-btn class="red-btn" >S'inscrire</v-btn>
+              <v-btn class="red-btn" @click="goToFormulaire">S'inscrire</v-btn>
             </v-col>
           </v-row>
         </v-container>
@@ -67,8 +65,12 @@
   </v-app>
 </template>
 
-<script>
+<script setup>
+import router from '@/router';
 
+function goToFormulaire(){
+  router.push('/formulaire')
+}
 </script>
 
 <style scoped lang="scss">

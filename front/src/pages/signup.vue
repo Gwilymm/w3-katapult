@@ -3,7 +3,6 @@
     <v-container>
       <v-row justify="center">
         <v-col cols="12" md="8">
-          <App-Bar></App-Bar>
           <v-form @submit.prevent ="submitSignUp">
             <v-text-field
               v-model="user.username"
