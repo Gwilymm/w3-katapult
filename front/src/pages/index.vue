@@ -9,7 +9,7 @@
               <p>
                 Nous lançons un appel à projets pour l'année 2024. Découvrez les conditions et participez pour transformer vos idées innovantes en réalité.
               </p>
-              <v-btn class="red-btn"  @click="handleDialoge">S'inscrire</v-btn>
+              <v-btn class="red-btn"  @click="handleDialog">S'inscrire</v-btn>
             </v-col>
           </v-row>
 
@@ -56,7 +56,7 @@
               <p>
                 Pour postuler, remplissez le formulaire de candidature disponible sur notre site. Notre équipe examinera votre projet et vous contactera pour un entretien.
               </p>
-              <v-btn class="red-btn" @click="handleDialoge">S'inscrire</v-btn>
+              <v-btn class="red-btn" @click="handleDialog">S'inscrire</v-btn>
             </v-col>
           </v-row>
         </v-container>
@@ -66,12 +66,22 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import router from '@/router';
 import { useAuthStore } from '@/stores/authStore';
+import ModalForm from '@/components/ModalForm.vue';
 
 const authStore = useAuthStore();
 const isUserConnected = computed(() => authStore.isAuthenticated);
-const authDialog = ref(null);
+const isDialogActive = ref(false);
+
+function handleDialog() {
+  if (!isUserConnected.value) {
+    isDialogActive.value = true;
+  } else {
+    goToFormulaire();
+  }
+}
 
 function goToFormulaire(){
   router.push('/formulaire')
