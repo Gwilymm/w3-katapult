@@ -34,7 +34,7 @@
 - `201 Created`: Modèle économique créé avec succès.
 - `500 Internal Server Error`: Erreur lors de la création du modèle économique.
 
-[Back to summary](../BACK_README.md#economic)
+[Back to summary](../BACK_README.md#economicModel)
 
 ### Get all EconomicModels
 
@@ -49,7 +49,7 @@
 - `200 OK`: Retourne une liste de tous les modèles économiques.
 - `500 Internal Server Error`: Erreur lors de la récupération des modèles économiques.
 
-[Back to summary](../BACK_README.md#economic)
+[Back to summary](../BACK_README.md#economicModel)
 
 ### Get an EconomicModel by ID
 
@@ -65,7 +65,7 @@
 - `404 Not Found`: Modèle économique non trouvé.
 - `500 Internal Server Error`: Erreur lors de la récupération du modèle économique.
 
-[Back to summary](../BACK_README.md#economic)
+[Back to summary](../BACK_README.md#economicModel)
 
 ### Update an EconomicModel by ID
 
@@ -96,7 +96,7 @@
 - `404 Not Found`: Modèle économique non trouvé.
 - `500 Internal Server Error`: Erreur lors de la mise à jour du modèle économique.
 
-[Back to summary](../BACK_README.md#economic)
+[Back to summary](../BACK_README.md#economicModel)
 
 ### Delete an EconomicModel by ID
 
@@ -112,7 +112,7 @@
 - `404 Not Found`: Modèle économique non trouvé.
 - `500 Internal Server Error`: Erreur lors de la suppression du modèle économique.
 
-[Back to summary](../BACK_README.md#economic)
+[Back to summary](../BACK_README.md#economicModel)
 
 ## Examples
 
@@ -152,7 +152,7 @@ curl -X POST http://localhost:3000/api/economic \
   "updatedAt": "2024-01-01T00:00:00.000Z"
 }
 ```
-[Back to summary](../BACK_README.md#economic)
+[Back to summary](../BACK_README.md#economicModel)
 
 ### Get all EconomicModels
 
@@ -181,7 +181,7 @@ curl -X GET http://localhost:3000/api/economic
   }
 ]
 ```
-[Back to summary](../BACK_README.md#economic)
+[Back to summary](../BACK_README.md#economicModel)
 
 ### Get an EconomicModel by ID
 
@@ -208,7 +208,7 @@ curl -X GET http://localhost:3000/api/economic/1
   "updatedAt": "2024-01-01T00:00:00.000Z"
 }
 ```
-[Back to summary](../BACK_README.md#economic)
+[Back to summary](../BACK_README.md#economicModel)
 
 ### Update an EconomicModel by ID
 
@@ -246,7 +246,7 @@ curl -X PUT http://localhost:3000/api/economic/1 \
   "updatedAt": "2024-01-02T00:00:00.000Z"
 }
 ```
-[Back to summary](../BACK_README.md#economic)
+[Back to summary](../BACK_README.md#economicModel)
 
 ### Delete an EconomicModel by ID
 
@@ -264,4 +264,4 @@ curl -X DELETE http://localhost:3000/api/economic/1
 }
 ```
 
-[Back to summary](../BACK_README.md#economic)
+[Back to summary](../BACK_README.md#economicModel)

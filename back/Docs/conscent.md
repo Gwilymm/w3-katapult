@@ -31,6 +31,8 @@ Response:
 201 Created : Conscent créé avec succès.
 500 Internal Server Error : Erreur lors de la création du conscent.
 
+[Retour au sommaire](../BACK_README.md#conscent)
+
 ### Get all Conscent
 
 **URL: /**
@@ -43,6 +45,8 @@ Response:
 
 200 OK : Retourne une liste de tous les conscent.
 500 Internal Server Error : Erreur lors de la récupération des conscent.
+
+[Retour au sommaire](../BACK_README.md#conscent)
 
 ### Get a Conscent by ID
 
@@ -57,6 +61,8 @@ Response:
 200 OK : Retourne le conscent trouvé.
 404 Not Found : Conscent non trouvé.
 500 Internal Server Error : Erreur lors de la récupération du conscent.
+
+[Retour au sommaire](../BACK_README.md#conscent)
 
 ### Update a Conscent by ID
 
@@ -84,6 +90,8 @@ Response:
 404 Not Found : Conscent non trouvé.
 500 Internal Server Error : Erreur lors de la mise à jour du conscent.
 
+[Retour au sommaire](../BACK_README.md#conscent)
+
 ### Delete a Conscent by ID
 
 **URL: /:id**
@@ -97,6 +105,8 @@ Response:
 204 No Content : Conscent supprimé avec succès.
 404 Not Found : Conscent non trouvé.
 500 Internal Server Error : Erreur lors de la suppression du conscent.
+
+[Retour au sommaire](../BACK_README.md#conscent)
 
 ## Examples
 
@@ -129,6 +139,7 @@ Copier le code
   "updatedAt": "2024-01-01T00:00:00.000Z"
 }
 ```
+[Retour au sommaire](../BACK_README.md#conscent)
 
 ### Get all Conscent
 
@@ -153,6 +164,7 @@ Response:
   }
 ]
 ```
+[Retour au sommaire](../BACK_README.md#conscent)
 
 ### Get a Conscent by ID
 
@@ -176,6 +188,7 @@ Copier le code
   "updatedAt": "2024-01-01T00:00:00.000Z"
 }
 ```
+[Retour au sommaire](../BACK_README.md#conscent)
 
 ### Update a Conscent by ID
 
@@ -205,6 +218,7 @@ Response:
   "updatedAt": "2024-01-02T00:00:00.000Z"
 }
 ```
+[Retour au sommaire](../BACK_README.md#conscent)
 
 ### Delete a Conscent by ID
 
@@ -221,4 +235,4 @@ Response:
   "message": "Conscent supprimé"
 }
 ```
-[Back](../BACK_README.md#conscent)
+[Retour au sommaire](../BACK_README.md#conscent)

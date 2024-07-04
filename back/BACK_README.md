@@ -42,7 +42,7 @@
 - [Delete TeamIntroduction by ID](Docs/teamintroduction.md#delete-teamintroduction-by-id)
 
 
-### 6.[User](Docs/user.md#user)
+### 6. [User](Docs/user.md#user)
 - [Register a new User](Docs/user.md#register-a-new-user)
 - [User Login](Docs/user.md#user-login)
 - [Get User Profile](Docs/user.md#get-user-profile)
@@ -56,7 +56,7 @@
 - [Get an Application by userId](Docs/application.md#get-an-application-by-userid)
 
 
-### 8.[Monday.com Integration](#mondaycom-integration)
+### 8. [Monday.com Integration](#mondaycom-integration)
 - [Create a new Item](Docs/monday.md#create-a-new-item)
 - [Internal Functions](Docs/monday.md#internal-functions)
 - [Get Last Item ID](Docs/monday.md#get-last-item-id)
