@@ -20,10 +20,7 @@ export class ApiService {
   static async login(user) {
     try {
       const response = await apiService.post("/auth/login", user);
-      const authStore = useAuthStore();
-      authStore.setToken(response.data.token);
-      authStore.setTokenUserInfo(response.data.user);
-      console.log('User info: ',response.data.user);
+      useAuthStore().setToken("token", response.data.token);
       return response.data;
     } catch (error) {
       console.error("Failed to login", error);
