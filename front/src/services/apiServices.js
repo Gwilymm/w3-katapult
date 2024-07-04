@@ -132,6 +132,7 @@ export class ApiService {
             "partnershipsResearch": details.autreContact,
             "stakeholderRoles": details.role,
         })
+        return response.data
     } catch(e){
         console.error(e)
     }
