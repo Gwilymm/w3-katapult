@@ -1,8 +1,14 @@
 const express = require("express");
+<<<<<<< Updated upstream
 const db = require("../config/database");
 const router = express.Router();
 const app = express();
 const User = require("../models/user");
+=======
+const { db, User } = require("../models");
+const router = express.Router();
+const app = express();
+>>>>>>> Stashed changes
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
@@ -15,7 +21,7 @@ const storage = multer.diskStorage({
     cb(null, "uploads/");
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname)); // Ajouter une timestamp pour éviter les conflits de noms
+    cb(null, Date.now() + path.extname(file.originalname));
   },
 });
 
@@ -27,11 +33,12 @@ app.use(express.json());
 
 // Middleware pour charger dynamiquement les routes
 router.get("/", async (req, res) => {
+<<<<<<< Updated upstream
    res.send("Hello World");
+=======
+  res.send("Welcome to Auth.");
+>>>>>>> Stashed changes
 });
-
-// Pour servir les fichiers statiques
-router.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Middleware pour vérifier le token JWT
 const authenticate = (req, res, next) => {
@@ -160,7 +167,10 @@ router.post(
   }
 );
 
+<<<<<<< Updated upstream
 // Générer le PDF
 router.get("/user/:id/pdf", authenticate, async (req, res) => {});
 
+=======
+>>>>>>> Stashed changes
 module.exports = router;
