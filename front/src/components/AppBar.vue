@@ -1,41 +1,43 @@
 <template>
-<v-app-bar :elevation="5">
-    <div class="">
-        <v-app-bar-nav-icon @click="goToHome"></v-app-bar-nav-icon>
-        <v-app-bar-title>ADRESS Normandie Incabateur Katapult</v-app-bar-title>
+  <v-app-bar :elevation="5">
+    <div>
+      <v-app-bar-nav-icon @click="goToHome"></v-app-bar-nav-icon>
+      <v-app-bar-title>ADRESS Normandie Incubateur Katapult</v-app-bar-title>
     </div>
     <template v-slot:append>
-        <v-btn  @click="goToSignUp">Sign Up</v-btn>
-        <v-btn  @click="goToProfile"  icon="mdi-account"></v-btn>
+      <v-btn v-if="!isUserConnected" @click="goToSignUp">S'inscrire</v-btn>
+      <v-btn v-if="!isUserConnected" @click="goToLogin">Se connecter</v-btn>
+      <v-btn v-if="isUserConnected" @click="goToProfile" icon="mdi-account"></v-btn>
     </template>
   </v-app-bar>
-  </template>
+</template>
 
-  <script setup>
-  import { ref } from 'vue'
-  import { useRouter } from 'vue-router'
-  const isUserConnected = ref(false)
-  const router = useRouter()
+<script setup>
+import { computed } from 'vue';
+import { useRouter } from 'vue-router';
+import { useAuthStore } from '@/stores/authStore';
 
-  function signIn() {
-    console.log('Sign in')
-    isUserConnected.value = true
-  }
+const router = useRouter();
+const authStore = useAuthStore();
+const isUserConnected = computed(() => authStore.isAuthenticated);
 
-  function goToProfile() {
-    router.push('/profile')
-  }
+function goToProfile() {
+  router.push('/profile');
+}
 
-  function goToHome() {
-    router.push('/')
-  }
+function goToHome() {
+  router.push('/');
+}
 
-  function goToSignUp() {
-    router.push('/signup')
-  }
-  </script>
+function goToSignUp() {
+  router.push('/signup');
+}
 
-  <style>
+function goToLogin() {
+  router.push('/login');
+}
+</script>
 
-  
-  </style>
+<style>
+/* Add your styles here */
+</style>

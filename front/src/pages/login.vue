@@ -36,11 +36,10 @@
     password: '',
   })
   
-  function submitLogin() {
+  async function submitLogin() {
     ApiService.login(loginDetails.value)
       .then((response) => {
         console.log(response)
-        router.push({ name: '/profile' })
       })
       .catch((error) => {
         console.log(error)

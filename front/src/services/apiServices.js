@@ -1,3 +1,4 @@
+import { useAuthStore } from '@/stores/authStore';
 import axios from 'axios';
 
 
@@ -17,9 +18,16 @@ export class ApiService {
         const response = await apiService.post('/auth/register', user);
         console.log(response.data);
     }
-
-    static async login (user) {
-        const response = await apiService.post('/auth/login', user);
-        console.log(response.data);
+    static async login(user) {
+        try {
+            const response = await apiService.post('/auth/login', user);
+            console.log('Logged in', response.data);
+            useAuthStore().setToken(response.data.token);
+            return response.data;
+        } catch (error) {
+            console.error('Failed to login', error);
+            throw error;
+        }
     }
 }
+
