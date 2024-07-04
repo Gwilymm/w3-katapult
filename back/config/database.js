@@ -1,9 +1,9 @@
 const { Sequelize } = require('sequelize');
 
-const sequelize = new Sequelize('katapult', 'root', '786786', {
+const sequelize = new Sequelize('application_db', 'user', 'userpassword', {
 	host: 'localhost',
 	dialect: 'mysql',
-	port: 3306,
+	port: 9090,
 });
 console.log('Connection has been established successfully.');
 module.exports = sequelize;

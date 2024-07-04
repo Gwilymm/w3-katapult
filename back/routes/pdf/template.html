@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dossier de candidature Katapult AAC 2024</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .header {
+        text-align: center;
+        padding: 10px 0;
+        color: #0f0f0f;
+        position: relative;
+      }
+
+      .header-logos {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 20px;
+        margin-bottom: 10px;
+      }
+
+      .header img {
+        height: 60px;
+      }
+
+      .header-text h1 {
+        margin: 0;
+        font-size: 2em;
+      }
+
+      .header-text h2 {
+        margin: 10px 0;
+        font-size: 1.5em;
+      }
+
+      .header-text h3 {
+        margin: 10px 0;
+        font-size: 1.2em;
+      }
+
+      .header h1 {
+        margin: 0;
+        font-size: 2em;
+      }
+      .header h2 {
+        margin: 10px 0;
+        font-size: 1.5em;
+      }
+      .header h3 {
+        margin: 10px 0;
+        font-size: 1.2em;
+      }
+      .header img.left {
+        left: 20px;
+      }
+      .header img.right {
+        right: 20px;
+      }
+      .section {
+        margin-bottom: 20px;
+        padding: 20px;
+      }
+      .section h2 {
+        margin-top: 0;
+        color: #004d99;
+      }
+      .form-group {
+        margin-bottom: 15px;
+      }
+      .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+      .form-group input,
+      .form-group textarea,
+      .form-group select {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      .form-group input[type="checkbox"] {
+        width: auto;
+      }
+      .form-group select {
+        height: 35px;
+      }
+      ul {
+        padding-left: 20px;
+      }
+      ul li {
+        margin-bottom: 10px;
+      }
+      a {
+        color: #004d99;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      .page-break {
+        page-break-before: always;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+
+      td {
+        border: 1px solid #ccc;
+        padding: 10px;
+        vertical-align: top;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+
+      .form-group input,
+      .form-group textarea,
+      .form-group select {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      .form-group input[type="checkbox"] {
+        width: auto;
+        margin-right: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Page 1 -->
+      <section class="header">
+        <div class="header-logos">
+          <img
+            src="data:image/png;base64,{{adressLogoBase64}}"
+            alt="ADRESS Logo"
+            class="left"
+          />
+          <img
+            src="data:image/png;base64,{{katapultLogoBase64}}"
+            alt="Katapult Logo"
+            class="right"
+          />
+        </div>
+        <div class="header-text">
+          <h1>ADRESS Normandie - Incubateur KATAPULT</h1>
+          <h2>Dossier de candidature</h2>
+          <h3>Promotion mars 2024</h3>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Fiche d'identité</h2>
+        <form action="#" method="POST">
+          <table>
+            <tr>
+              <td colspan="2">
+                <div class="form-group">
+                  <label for="nom-projet">Nom du projet</label>
+                  <input type="text" id="nom-projet" name="nom-projet" />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="form-group">
+                  <label for="secteur-activite">Secteur d'activité</label>
+                  <input
+                    type="text"
+                    id="secteur-activite"
+                    name="secteur-activite"
+                  />
+                </div>
+              </td>
+              <td>
+                <div class="form-group">
+                  <label for="territoire-implantation"
+                    >Territoire d'implantation (ville, agglomération,
+                    département... selon le projet)</label
+                  >
+                  <input
+                    type="text"
+                    id="territoire-implantation"
+                    name="territoire-implantation"
+                  />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <div class="form-group">
+                  <label for="zone-intervention"
+                    >Zone géographique d'intervention (périmètre touché par
+                    votre projet)</label
+                  >
+                  <div>
+                    <label
+                      ><input type="checkbox" name="zone" value="quartier" />
+                      Quartier</label
+                    >
+                    <label
+                      ><input
+                        type="checkbox"
+                        name="zone"
+                        value="ville-village"
+                      />
+                      Ville / village</label
+                    >
+                    <label
+                      ><input
+                        type="checkbox"
+                        name="zone"
+                        value="agglomeration-metropole"
+                      />
+                      Agglomération / Métropole</label
+                    >
+                    <label
+                      ><input type="checkbox" name="zone" value="departement" />
+                      Département</label
+                    >
+                    <label
+                      ><input type="checkbox" name="zone" value="region" />
+                      Région</label
+                    >
+                    <label
+                      ><input type="checkbox" name="zone" value="national" />
+                      National</label
+                    >
+                    <label
+                      ><input
+                        type="checkbox"
+                        name="zone"
+                        value="international"
+                      />
+                      International</label
+                    >
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <div class="form-group">
+                  <label for="source"
+                    >Comment avez-vous eu connaissance de l’appel à candidatures
+                    ?</label
+                  >
+                  <div>
+                    <label
+                      ><input
+                        type="checkbox"
+                        name="source"
+                        value="bouche-a-oreilles"
+                      />
+                      Bouche à oreilles (réseau personnel ou
+                      professionnel)</label
+                    >
+                    <label
+                      ><input type="checkbox" name="source" value="facebook" />
+                      Contenu sur Facebook</label
+                    >
+                    <label
+                      ><input type="checkbox" name="source" value="linkedin" />
+                      Contenu sur LinkedIn</label
+                    >
+                    <label
+                      ><input type="checkbox" name="source" value="web" />
+                      Contenu sur le web</label
+                    >
+                    <label
+                      ><input
+                        type="checkbox"
+                        name="source"
+                        value="information-par-tiers"
+                      />
+                      Information par un tiers (structure d’accompagnement,
+                      collectivité…)</label
+                    >
+                    <label
+                      ><input
+                        type="checkbox"
+                        name="source"
+                        value="presse-radio"
+                      />
+                      Presse / Radio</label
+                    >
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </form>
+      </section>
+
+      <!-- Page 2 -->
+      <section class="section page-break">
+        <h2>L'équipe projet</h2>
+        <div class="form-group">
+          <label for="nom">Nom</label>
+          <input type="text" id="nom" name="nom" />
+        </div>
+        <div class="form-group">
+          <label for="prenom">Prénom</label>
+          <input type="text" id="prenom" name="prenom" />
+        </div>
+        <div class="form-group">
+          <label for="date-naissance">Date de naissance</label>
+          <input type="date" id="date-naissance" name="date-naissance" />
+        </div>
+        <div class="form-group">
+          <label for="adresse">Adresse</label>
+          <input type="text" id="adresse" name="adresse" />
+        </div>
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" name="email" />
+        </div>
+        <div class="form-group">
+          <label for="telephone">Téléphone</label>
+          <input type="tel" id="telephone" name="telephone" />
+        </div>
+        <div class="form-group">
+          <label for="autres-personnes"
+            >Autres personnes impliquées dans le projet (qui participeront
+            potentiellement au parcours d’incubation)</label
+          >
+          <textarea id="autres-personnes" name="autres-personnes"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="structure-juridique"
+            >Structure juridique déjà existante (si c’est le cas)</label
+          >
+          <textarea
+            id="structure-juridique"
+            name="structure-juridique"
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label for="nom-structure">Nom de la structure</label>
+          <input type="text" id="nom-structure" name="nom-structure" />
+        </div>
+        <div class="form-group">
+          <label for="statut-juridique">Statut juridique</label>
+          <select id="statut-juridique" name="statut-juridique">
+            <option value="association">Association</option>
+            <option value="coopérative">Coopérative</option>
+            <option value="societe-commerciale-ess">
+              Société commerciale de l’ESS
+            </option>
+            <option value="societe-commerciale-hors-ess">
+              Société commerciale hors ESS
+            </option>
+            <option value="autre">Autre: préciser…</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="date-creation">Date de création</label>
+          <input type="date" id="date-creation" name="date-creation" />
+        </div>
+        <div class="form-group">
+          <label for="cadre-candidature"
+            >Dans quel cadre la structure candidate-t-elle à
+            l’incubateur?</label
+          >
+          <select id="cadre-candidature" name="cadre-candidature">
+            <option value="developpement-nouvelle-activite">
+              Développement d’une nouvelle activité
+            </option>
+            <option value="implantation-normandie">
+              Implantation en Normandie
+            </option>
+            <option value="autre">Autre: préciser…</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="referente-salariee"
+            >La personne référente pour le projet est-elle salariée par la
+            structure ou bénévole?</label
+          >
+          <input
+            type="text"
+            id="referente-salariee"
+            name="referente-salariee"
+          />
+        </div>
+        <div class="form-group">
+          <label for="temps">Depuis combien de temps?</label>
+          <input type="text" id="temps" name="temps" />
+        </div>
+      </section>
+      <!-- page 3 -->
+      <section class="section page-break">
+        <h2>Votre projet et son utilité sociale</h2>
+        <form action="#" method="POST">
+          <div class="form-group">
+            <label for="genese-projet"
+              >Expliquez la genèse de votre projet (environ 10 lignes)</label
+            >
+            <textarea id="genese-projet" name="genese-projet"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="resume-projet"
+              >Résumez votre projet (10 lignes maximum)</label
+            >
+            <textarea id="resume-projet" name="resume-projet"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="probleme-social"
+              >À quel problème social et/ou environnemental souhaitez-vous
+              répondre ?</label
+            >
+            <textarea id="probleme-social" name="probleme-social"></textarea>
+          </div>
+        </form>
+      </section>
+
+      <!-- Page 4 -->
+      <section class="section">
+        <h2>Qui est concerné ?</h2>
+        <form action="#" method="POST">
+          <div class="form-group">
+            <label for="beneficiaires"
+              >Qui seront les bénéficiaires de votre projet ? Qui seront les
+              clients ?</label
+            >
+            <textarea id="beneficiaires" name="beneficiaires"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="offre"
+              >Quelle solution souhaitez-vous proposer ? Quelle sera votre offre
+              ?</label
+            >
+            <textarea id="offre" name="offre"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="differentiation"
+              >En quoi votre projet est-il différent et/ou complémentaire des
+              solutions existantes sur le territoire considéré ?</label
+            >
+            <textarea id="differentiation" name="differentiation"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="indicateurs"
+              >Quels seraient les premiers indicateurs d’impact social
+              pertinents pour évaluer votre projet ?</label
+            >
+            <textarea id="indicateurs" name="indicateurs"></textarea>
+          </div>
+        </form>
+      </section>
+
+      <section class="section page-break">
+        <h2>Le modèle économique</h2>
+        <form action="#" method="POST">
+          <div class="form-group">
+            <label for="sources-revenus"
+              >Quelles sont les sources de revenus envisagées pour votre projet
+              ? Concrètement, qu’allez-vous vendre ? Comment imaginez-vous
+              assurer la viabilité économique du projet sur le long terme
+              ?</label
+            >
+            <textarea id="sources-revenus" name="sources-revenus"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="emplois-creation"
+              >Combien d’emplois pensez-vous créer sur les premières années
+              d’activités ? Sur quels types de postes / missions ?</label
+            >
+            <textarea id="emplois-creation" name="emplois-creation"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="viabilite-economique"
+              >À ce stade, quels sont les éléments vous permettant d’affirmer la
+              viabilité économique du projet ?</label
+            >
+            <textarea
+              id="viabilite-economique"
+              name="viabilite-economique"
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="diversification-developpement"
+              >Quels pourraient être les projets de diversification et de
+              développement économique de l’activité à moyen/long terme ?</label
+            >
+            <textarea
+              id="diversification-developpement"
+              name="diversification-developpement"
+            ></textarea>
+          </div>
+        </form>
+      </section>
+
+      <!-- Page 6 -->
+      <section class="section page-break">
+        <h2>La place des parties prenantes dans votre projet</h2>
+        <form action="#" method="POST">
+          <div class="form-group">
+            <label for="contacts-partenariats"
+              >Avez-vous déjà établi des contacts ou partenariats pour
+              contribuer au projet ? Si oui, de quelle manière ?</label
+            >
+            <textarea
+              id="contacts-partenariats"
+              name="contacts-partenariats"
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="recherches-partenariats"
+              >Quels autres contacts ou partenariats recherchez-vous aujourd’hui
+              ?</label
+            >
+            <textarea
+              id="recherches-partenariats"
+              name="recherches-partenariats"
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="role-acteurs"
+              >Quel rôle voudriez-vous que jouent ces différents acteurs dans le
+              projet à terme ?</label
+            >
+            <textarea id="role-acteurs" name="role-acteurs"></textarea>
+          </div>
+        </form>
+      </section>
+
+      <!-- Page 7 -->
+      <section class="section page-break">
+        <h2>Vous et votre équipe</h2>
+        <form action="#" method="POST">
+          <div class="form-group">
+            <label for="presentation-equipe">Présentation de l’équipe</label>
+            <textarea
+              id="presentation-equipe"
+              name="presentation-equipe"
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="experience-entrepreneuriale"
+              >Avez-vous une expérience entrepreneuriale ? Si oui,
+              précisez.</label
+            >
+            <textarea
+              id="experience-entrepreneuriale"
+              name="experience-entrepreneuriale"
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="inspiration-entrepreneur"
+              >Citez un entrepreneur social qui vous inspire
+              particulièrement</label
+            >
+            <textarea
+              id="inspiration-entrepreneur"
+              name="inspiration-entrepreneur"
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="competences-manquantes"
+              >Quelles sont selon vous les compétences manquantes dans l’équipe
+              pour mener à bien ce projet ? Comment comptez-vous y pallier
+              ?</label
+            >
+            <textarea
+              id="competences-manquantes"
+              name="competences-manquantes"
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="suivi-parcours"
+              >Qui suivra le parcours d’incubation ? Une ou plusieurs personnes
+              ?</label
+            >
+            <textarea id="suivi-parcours" name="suivi-parcours"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="place-equipe"
+              >Place de chacun des membres de l’équipe projet</label
+            >
+            <textarea id="place-equipe" name="place-equipe"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="situation-professionnelle"
+              >Quelle est votre situation professionnelle actuelle ?</label
+            >
+            <textarea
+              id="situation-professionnelle"
+              name="situation-professionnelle"
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="revenus-periode-incubation"
+              >Quels seront vos revenus durant la période d’incubation ?</label
+            >
+            <textarea
+              id="revenus-periode-incubation"
+              name="revenus-periode-incubation"
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="volume-horaire"
+              >Quel volume horaire hebdomadaire pouvez-vous dédier au parcours
+              d’incubation ?</label
+            >
+            <textarea id="volume-horaire" name="volume-horaire"></textarea>
+          </div>
+        </form>
+      </section>
+
+      <!-- Page 8 -->
+      <section class="section page-break">
+        <h2>L’équipe et le parcours d’incubation</h2>
+        <form action="#" method="POST">
+          <div class="form-group">
+            <label for="besoins-attentes"
+              >Pourquoi souhaitez-vous intégrer l’incubateur de l’ADRESS ? Quels
+              sont vos besoins et vos attentes en termes d’accompagnement
+              ?</label
+            >
+            <textarea id="besoins-attentes" name="besoins-attentes"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="apport-incubateur"
+              >Que pouvez-vous apporter à l’incubateur et aux incubés ?</label
+            >
+            <textarea
+              id="apport-incubateur"
+              name="apport-incubateur"
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="etat-avancement">État d’avancement du projet</label>
+            <textarea id="etat-avancement" name="etat-avancement"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="diagnostic-territorial"
+              >Diagnostic territorial, étude du besoin social /
+              environnemental</label
+            >
+            <textarea
+              id="diagnostic-territorial"
+              name="diagnostic-territorial"
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="constitution-collectif"
+              >Constitution d’un collectif moteur</label
+            >
+            <textarea
+              id="constitution-collectif"
+              name="constitution-collectif"
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="experimentation-terrain"
+              >Expérimentation terrain - 1ers résultats</label
+            >
+            <textarea
+              id="experimentation-terrain"
+              name="experimentation-terrain"
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="etude-marche">Étude de marché</label>
+            <textarea id="etude-marche" name="etude-marche"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="formalisation-offre">Formalisation de l’offre</label>
+            <textarea
+              id="formalisation-offre"
+              name="formalisation-offre"
+            ></textarea>
+          </div>
+        </form>
+      </section>
+      <!-- Page 9 -->
+      <section class="section page-break">
+        <h2>Premier chiffrage</h2>
+        <form action="#" method="POST">
+          <div class="form-group">
+            <label for="premier-risque"
+              >Quel est le premier risque que vous ayez pris à ce jour pour
+              votre projet ?</label
+            >
+            <textarea id="premier-risque" name="premier-risque"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="analyse-projet"
+              >Quelle analyse faites-vous de votre projet à ce stade ?</label
+            >
+            <textarea id="analyse-projet" name="analyse-projet"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="forces"
+              >Forces (Facteurs positifs d’origine interne)</label
+            >
+            <textarea id="forces" name="forces"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="faiblesses"
+              >Faiblesses (Facteurs négatifs d’origine interne)</label
+            >
+            <textarea id="faiblesses" name="faiblesses"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="opportunites"
+              >Opportunités (Facteurs positifs d’origine externe)</label
+            >
+            <textarea id="opportunites" name="opportunites"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="menaces"
+              >Menaces (Facteurs négatifs d’origine externe)</label
+            >
+            <textarea id="menaces" name="menaces"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="pallier-menaces"
+              >Comment palliez-vous vos faiblesses et contournez-vous les
+              menaces ?</label
+            >
+            <textarea id="pallier-menaces" name="pallier-menaces"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="echeance-creation"
+              >À quelle échéance souhaitez-vous créer ? Quel est votre plan
+              d’action / calendrier prévisionnel ?</label
+            >
+            <textarea
+              id="echeance-creation"
+              name="echeance-creation"
+            ></textarea>
+          </div>
+        </form>
+      </section>
+
+      <!-- Page 10 -->
+      <section class="section page-break">
+        <h2>Disponibilité et Engagement</h2>
+        <form action="#" method="POST">
+          <div class="form-group">
+            <label for="deplacement-normandie"
+              >Êtes-vous prêt(e) à vous déplacer en Normandie pour suivre les
+              formations collectives, des événementiels pour présenter votre
+              projet, favoriser la mise en réseau, le développement de votre
+              projet ?</label
+            >
+            <input
+              type="checkbox"
+              id="deplacement-normandie"
+              name="deplacement-normandie"
+            />
+            <label for="deplacement-normandie">Oui</label>
+            <input
+              type="checkbox"
+              id="non-deplacement-normandie"
+              name="deplacement-normandie"
+            />
+            <label for="non-deplacement-normandie">Non</label>
+          </div>
+          <div class="form-group">
+            <label for="communication-projet"
+              >Êtes-vous prêt à communiquer sur votre projet lors des
+              présentations et des mises en relation ?</label
+            >
+            <input
+              type="checkbox"
+              id="communication-projet"
+              name="communication-projet"
+            />
+            <label for="communication-projet">Oui</label>
+            <input
+              type="checkbox"
+              id="non-communication-projet"
+              name="communication-projet"
+            />
+            <label for="non-communication-projet">Non</label>
+          </div>
+          <div class="form-group">
+            <label for="engagement-parcours"
+              >Avez-vous bien pris connaissance de l’offre et êtes-vous prêt à
+              vous engager dans un parcours intensif d’un an ?</label
+            >
+            <input
+              type="checkbox"
+              id="engagement-parcours"
+              name="engagement-parcours"
+            />
+            <label for="engagement-parcours">Oui</label>
+            <input
+              type="checkbox"
+              id="non-engagement-parcours"
+              name="engagement-parcours"
+            />
+            <label for="non-engagement-parcours">Non</label>
+          </div>
+        </form>
+      </section>
+
+      <!-- Page 11 -->
+      <section class="section page-break">
+        <h2>Les dates à retenir</h2>
+        <ul>
+          <li>
+            <strong>Dépôt du dossier de candidature et annexes :</strong> 21
+            février 2024 minuit
+          </li>
+          <li>
+            <strong>Processus de sélection :</strong>
+            <ul>
+              <li>Présélection sur dossier</li>
+              <li>
+                Comités de sélection :
+                <ul>
+                  <li>
+                    Caen (projets des départements 14, 50 et 61) : 12 et 13 mars
+                    2024
+                  </li>
+                  <li>
+                    Rouen (projets des départements 27 et 76) : 14 et 15 mars
+                    2024
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong
+              >Si vous êtes sélectionné pour intégrer l’incubateur, voici les
+              premières dates :</strong
+            >
+            <ul>
+              <li>
+                Premier rendez-vous avec l’ADRESS à fixer à partir du 18 mars
+                2024
+              </li>
+              <li>Journée d’intégration : 4 avril 2024 (lieu à définir)</li>
+              <li>1ère journée de formation : 10, 11 ou 12 avril 2024</li>
+            </ul>
+          </li>
+        </ul>
+        <p>
+          <strong
+            >Dossier de candidature et annexes à joindre au dossier :</strong
+          >
+        </p>
+        <ul>
+          <li>Le CV de chacun des porteurs de projets</li>
+          <li>
+            Si vous êtes une entreprise existante (développement d’un nouveau
+            projet ou essaimage), merci de joindre également le dernier rapport
+            d’activité et les derniers éléments financiers.
+          </li>
+        </ul>
+        <p>
+          À renvoyer en version numérique avant le 21 février 2024 minuit à :
+          <a href="mailto:katapult@adress-normandie.org"
+            >katapult@adress-normandie.org</a
+          >
+        </p>
+      </section>
+
+      <!-- Page 12 -->
+      <section class="section">
+        <h2>Contact</h2>
+        <p>ADRESS Normandie, 115 bd de l’Europe, 76100 Rouen</p>
+        <p>
+          Pôle Régional de l’ESS – Espace Malraux – 5 esplanade François
+          Rabelais, 14200 Hérouville-Saint-Clair
+        </p>
+        <p>Téléphone : 02.35.72.12.12</p>
+        <p>
+          Email :
+          <a href="mailto:katapult@adress-normandie.org"
+            >katapult@adress-normandie.org</a
+          >
+        </p>
+        <p>Ce parcours est soutenu par ADRESS Normandie</p>
+      </section>
+    </div>
+  </body>
+</html>
