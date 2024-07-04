@@ -29,6 +29,7 @@
   import { ref } from 'vue';
   import { ApiService } from '@/services/apiServices';
   import router from '@/router';
+  import { useAuthStore } from '@/stores/authStore';
 
   const loginDetails = ref({
     username: '',
@@ -38,7 +39,7 @@
   async function submitLogin() {
     ApiService.login(loginDetails.value)
       .then((response) => {
-        // console.log(response)
+        console.log(response)
         router.push({ path: '/' })
       })
       .catch((error) => {

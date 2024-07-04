@@ -89,7 +89,7 @@ async function submitSignUp() {
   try {
     let response = await ApiService.signUp(user.value)
     useAuthStore().setToken(response.data.token);
-
+    useAuthStore().setUser(user.value)
     router.push('/')
   } catch(e) {
     console.error(e)

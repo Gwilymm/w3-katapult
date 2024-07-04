@@ -38,17 +38,11 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-row>
-        <v-col cols="12">
-            <v-card subtitle="Numéro de siret">
-              <v-text-field v-model="siret"></v-text-field>
-            </v-card>
-        </v-col>
-    </v-row>
   </v-card>
 </template>
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { useAuthStore } from '@/stores/authStore';
 
 let firstName = ref("");
 let lastName = ref("");
@@ -56,5 +50,14 @@ let birthDate = ref("");
 let email = ref("");
 let adress = ref("");
 let phoneNbr = ref("");
-let siret = ref("");
+
+onMounted(() => {
+  let user = useAuthStore().user
+  firstName.value = user.firstName
+  lastName.value = user.lastName
+  birthDate.value = user.birthDate
+  email.value = user.email
+  phoneNbr.value = user.phoneNumber
+  adress.value = user.address
+})
 </script>

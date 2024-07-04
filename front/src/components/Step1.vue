@@ -317,7 +317,7 @@ const rules = {
   required: (value) => !!value || "Requis",
 };
 const addPerson = () => {
-  formData.value.otherPeople.push({
+  formData.otherPeople.push({
     firstName: "",
     lastName: "",
     email: "",
