@@ -48,10 +48,7 @@ const loadRoutes = (app) => {
 // Charger les routes
 loadRoutes(app);
 
-// Synchronisation des modèles avec la base de données
-db.sequelize.sync({ alter: true }).then(() => {
-	console.log('Database & tables created/updated!');
-});
+
 
 // Gérer les routes non-API en renvoyant `index.html`
 app.get('*', (req, res) => {
@@ -59,9 +56,10 @@ app.get('*', (req, res) => {
 });
 
 
-// Démarrage du serveur
 sequelize.sync().then(() => {
 	app.listen(port, () => {
 		console.log(`Serveur en cours sur http://localhost:${port}`);
 	});
+}).catch(error => {
+	console.error('Unable to sync database:', error);
 });

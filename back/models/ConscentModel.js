@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.BOOLEAN,
 			allowNull: false,
 		},
-		engegement: {
+		engagement: {
 			type: DataTypes.BOOLEAN,
 			allowNull: false,
 		},

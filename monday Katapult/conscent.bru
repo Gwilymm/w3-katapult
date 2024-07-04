@@ -1,0 +1,21 @@
+meta {
+  name: conscent
+  type: http
+  seq: 12
+}
+
+post {
+  url: http://localhost:3000/api/conscent
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "applicationId": 1,
+    "move": true,
+    "communicate": true,
+    "engagement": true
+  }
+  
+}
