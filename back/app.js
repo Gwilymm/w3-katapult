@@ -14,8 +14,20 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const loadRoutes = (app) => {
 	const routesPath = path.join(__dirname, 'routes');
 	fs.readdirSync(routesPath).forEach((file) => {
-		if (file.endsWith('.js')) {
-			const route = require(path.join(routesPath, file));
+		const fullPath = path.join(routesPath, file);
+		const stat = fs.statSync(fullPath);
+
+		if (stat.isDirectory()) {
+			fs.readdirSync(fullPath).forEach((subFile) => {
+				if (subFile.endsWith('.js')) {
+					const route = require(path.join(fullPath, subFile));
+					const routeName = path.basename(fullPath);
+					console.log(`Chargement de la sous-route /api/${routeName}`);
+					app.use(`/api/${routeName}`, route);
+				}
+			});
+		} else if (file.endsWith('.js')) {
+			const route = require(fullPath);
 			const routeName = file.split('.')[ 0 ];
 			console.log(`Chargement de la route /api/${routeName}`);
 			app.use(`/api/${routeName}`, route);
