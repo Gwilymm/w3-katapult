@@ -43,6 +43,15 @@ db.ProjectTeam.belongsTo(db.Application, { foreignKey: 'applicationId', as: 'app
 db.Application.hasMany(db.Conscent, { foreignKey: 'applicationId', as: 'conscent' });
 db.Conscent.belongsTo(db.Application, { foreignKey: 'applicationId', as: 'application' });
 
+db.Application.hasMany(db.ProjectIdentity, { foreignKey: 'applicationId', as: 'projectIdentity' });
+db.ProjectIdentity.belongsTo(db.Application, { foreignKey: 'applicationId', as: 'application' });
+
+db.Application.hasMany(db.ProjectMembers, { foreignKey: 'applicationId', as: 'projectMembers' });
+db.ProjectMembers.belongsTo(db.Application, { foreignKey: 'applicationId', as: 'application' });
+
+db.Application.hasMany(db.LegalStructure, { foreignKey: 'applicationId', as: 'legalStructure' });
+db.LegalStructure.belongsTo(db.Application, { foreignKey: 'applicationId', as: 'application' });
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
