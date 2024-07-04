@@ -40,13 +40,23 @@
 
   <script setup>
   import { ref } from 'vue';
+  import { useAuthStore } from '@/stores/authStore';
 
+  const authStore = useAuthStore();
   const profile = ref({
     firstName: '',
     lastName: '',
     email: '',
     phoneNumber: ''
   });
+
+  watch (
+    () => authStore.getUserInfo,
+    (newValue) => {
+      profile.value = newValue
+    },
+    { immediate: true }
+  )
 
   </script>
   <style scoped>
