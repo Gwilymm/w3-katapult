@@ -12,6 +12,17 @@ export const useAuthStore = defineStore("auth", {
       birthDate:"",
       address:""
     },
+    step2 : {
+      projectDescription:'',
+      resume:'',
+      ampleur:'',
+      socialUtility:'',
+      solution:'',
+      difference:'',
+      indicateurs:''
+    },
+    appId:null,
+    projectDetailId:null
   }),
   getters: {
     isAuthenticated: (state) => !!state.token,
@@ -22,7 +33,6 @@ export const useAuthStore = defineStore("auth", {
       this.token = newToken;
     },
     setUser(userData) {
-        console.log(userData)
       this.user.id = userData.id;
       this.user.firstName = userData.firstName;
       this.user.lastName = userData.lastName;
@@ -30,6 +40,21 @@ export const useAuthStore = defineStore("auth", {
       this.user.phoneNumber = userData.phoneNumber;
       this.user.birthDate = userData.birthDate;
       this.user.address = userData.address
+    },
+    setStep2(formData) {
+      this.step2.projectDescription = formData.projectDescription;
+      this.step2.resume = formData.resume;
+      this.step2.ampleur = formData.ampleur;
+      this.step2.socialUtility = formData.socialUtility;
+      this.step2.solution = formData.solution;
+      this.step2.difference = formData.difference;
+      this.step2.indicateurs = formData.indicateurs;
+    },
+    setAppId(appId) {
+      this.appId = appId
+    },
+    setProjectDetailId(projectDetailId){
+      this.projectDetailId = projectDetailId
     },
     clearToken() {
       this.token = null;
@@ -45,8 +70,17 @@ export const useAuthStore = defineStore("auth", {
         address:""
       };
     },
+    clearAppId(){
+      this.appId = null
+    },
+    clearProjectDetailId(){
+      this.projectDetailId = null
+    },
     logout() {
       this.clearToken();
+      this.clearUser();
+      this.clearAppId();
+      this.clearProjectDetailId();
     },
   },
 });

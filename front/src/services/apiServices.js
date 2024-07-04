@@ -33,7 +33,7 @@ export class ApiService {
   static async createApp(userId) {
     try {
       let year = new Date().getFullYear();
-      const response = await apiService.post("/api/application/", {
+      const response = await apiService.post("/application/", {
         userId: userId,
         applicationYear: year,
       });
@@ -44,23 +44,23 @@ export class ApiService {
   }
   static async getApp(userId) {
     try {
-      const response = await apiService.get(`/api/application/${userId}`);
+      const response = await apiService.get(`/application/${userId}`);
       return response.data;
     } catch (e) {
       console.error(e);
     }
   }
-  static async createProjectDetails(applicationId, details) {
+  static async createProjectDetails(applicationId, details = null) {
     try {
-      const response = await apiService.post("/api/projectdetails/", {
+      const response = await apiService.post("/projectdetails/", {
         applicationId: applicationId,
-        genesis: details.projectDescription,
-        summary: details.resume,
-        problemAddressed: details.ampleur,
-        beneficiaries: details.socialUtility,
-        offer: details.solution,
-        differentiation: details.difference,
-        socialImpactIndicators: details.indicateurs,
+        genesis: details?.projectDescription | "",
+        summary: details?.resume | "",
+        problemAddressed: details?.ampleur | "",
+        beneficiaries: details?.socialUtility | "",
+        offer: details?.solution | "",
+        differentiation: details?.difference | "",
+        socialImpactIndicators: details?.indicateurs | "",
       });
       return response.data;
     } catch (e) {
@@ -71,7 +71,7 @@ export class ApiService {
   static async getProjectDetails(applicationId) {
     try {
       const response = await apiService.get(
-        `/api/projectdetails/${applicationId}`
+        `/projectdetails/application/${applicationId}`
       );
       return response;
     } catch (e) {
@@ -81,7 +81,7 @@ export class ApiService {
 
   static async updateProjectDetails(projectId, applicationId, details) {
     try {
-      const response = await apiService.put(`/api/projectdetails/${projectId}`, {
+      const response = await apiService.put(`/projectdetails/${projectId}`, {
         applicationId: applicationId,
         genesis: details.projectDescription,
         summary: details.resume,
@@ -99,7 +99,7 @@ export class ApiService {
 
   static async createEconomicModel(applicationId, details) {
     try {
-      const response = await apiService.post("/api/economic/", {
+      const response = await apiService.post("/economic/", {
         "applicationId": applicationId,
         "revenueSources": details.revenus,
         "jobCreation": details.emplois,
@@ -117,7 +117,7 @@ export class ApiService {
 
   static async getEconomicModel(applicationId) {
     try{
-        const response = await apiService.get(`/api/economic/${applicationId}`)
+        const response = await apiService.get(`/economic/${applicationId}`)
         return response.data
     } catch(e) {
         console.error(e)
@@ -125,7 +125,7 @@ export class ApiService {
   }
   static async updateEconomicModel(economicId, applicationId, details){
     try {
-        const response = await apiService.put(`/api/economic/${economicId}`, {
+        const response = await apiService.put(`/economic/${economicId}`, {
             "applicationId": applicationId,
             "revenueSources": details.revenus,
             "jobCreation": details.emplois,

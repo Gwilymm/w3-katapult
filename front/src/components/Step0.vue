@@ -42,7 +42,8 @@
 </template>
 <script setup>
 import { ref, onMounted } from "vue";
-import { useAuthStore } from '@/stores/authStore';
+import { useAuthStore } from "@/stores/authStore";
+import { ApiService } from "@/services/apiServices";
 
 let firstName = ref("");
 let lastName = ref("");
@@ -51,13 +52,28 @@ let email = ref("");
 let adress = ref("");
 let phoneNbr = ref("");
 
-onMounted(() => {
-  let user = useAuthStore().user
-  firstName.value = user.firstName
-  lastName.value = user.lastName
-  birthDate.value = user.birthDate
-  email.value = user.email
-  phoneNbr.value = user.phoneNumber
-  adress.value = user.address
-})
+onMounted(async () => {
+  try {
+    let user = useAuthStore().user;
+    firstName.value = user.firstName;
+    lastName.value = user.lastName;
+    birthDate.value = user.birthDate;
+    email.value = user.email;
+    phoneNbr.value = user.phoneNumber;
+    adress.value = user.address;
+    let app = await ApiService.getApp(user.id);
+    let details = null
+    if(app == undefined){
+      app = await ApiService.createApp(user.id)
+      details = await ApiService.createProjectDetails(app.id)
+    }
+    else{
+      details = await ApiService.getProjectDetails(app.id)
+    }
+    useAuthStore().appId = app.id
+    useAuthStore().projectDetailId = details.data[0].id
+  } catch (e) {
+    console.error(e);
+  }
+});
 </script>

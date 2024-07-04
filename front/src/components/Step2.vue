@@ -1,6 +1,6 @@
 <template>
   <v-card title="Votre projet et son utilité sociale" flat>
-  <v-form ref="form2" v-model="valid" @submit.prevent="nextStep">
+    <v-form ref="form2" v-model="valid" @submit.prevent="nextStep">
       <v-card title="Expliquez la genèse de votre projet (environ 10 lignes)">
         <v-textarea
           v-model="formData.projectDescription"
@@ -23,8 +23,6 @@
         <v-textarea
           v-model="formData.ampleur"
           :rules="[rules.required]"
-          label="
-              "
         ></v-textarea>
       </v-card>
       <v-card
@@ -72,30 +70,86 @@
     </v-form>
   </v-card>
 </template>
+
 <script setup>
-import {ref, reactive} from "vue";
+import { onMounted, ref, reactive, watch } from "vue";
+import { ApiService } from "@/services/apiServices";
+import { useAuthStore } from "../stores/authStore";
+
+const authStore = useAuthStore();
 
 const valid = ref(false);
 const formData = reactive({
-  projectDescription:'',
-  resume:'',
-  ampleur:'',
-  socialUtility:'',
-  solution:'',
-  difference:'',
-  indicateurs:''
+  projectDescription: "",
+  resume: "",
+  ampleur: "",
+  socialUtility: "",
+  solution: "",
+  difference: "",
+  indicateurs: "",
+});
+onMounted(async ()=>{
+  let details = await ApiService.getProjectDetails(authStore.appId)
+  let data = details.data[0]
+  formData.projectDescription = data.genesis;
+  formData.resume = data.summary;
+  formData.ampleur = data.problemAddressed;
+  formData.socialUtility = data.beneficiaries;
+  formData.solution = data.offer;
+  formData.difference = data.differentiation;
+  formData.indicateurs = data.socialImpactIndicators;
 })
 const rules = {
   required: (value) => !!value || "Requis",
 };
+
 const nextStep = () => {
   if (valid.value) {
     emit("next");
   }
 };
 
-const savedData = localStorage.getItem("step2");
-if (savedData) {
-  Object.assign(formData, JSON.parse(savedData));
-}
+// Watchers for each field
+watch(
+  () => formData.projectDescription,
+  (newVal) => {
+    authStore.setStep2({ ...formData, projectDescription: newVal });
+  }
+);
+watch(
+  () => formData.resume,
+  (newVal) => {
+    authStore.setStep2({ ...formData, resume: newVal });
+  }
+);
+watch(
+  () => formData.ampleur,
+  (newVal) => {
+    authStore.setStep2({ ...formData, ampleur: newVal });
+  }
+);
+watch(
+  () => formData.socialUtility,
+  (newVal) => {
+    authStore.setStep2({ ...formData, socialUtility: newVal });
+  }
+);
+watch(
+  () => formData.solution,
+  (newVal) => {
+    authStore.setStep2({ ...formData, solution: newVal });
+  }
+);
+watch(
+  () => formData.difference,
+  (newVal) => {
+    authStore.setStep2({ ...formData, difference: newVal });
+  }
+);
+watch(
+  () => formData.indicateurs,
+  (newVal) => {
+    authStore.setStep2({ ...formData, indicateurs: newVal });
+  }
+);
 </script>
