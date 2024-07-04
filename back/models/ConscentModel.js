@@ -1,5 +1,3 @@
-const { move } = require("../routes/auth")
-
 module.exports = (sequelize, DataTypes) => {
 	const Conscent = sequelize.define('Conscent', {
 		applicationId: {

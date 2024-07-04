@@ -5,16 +5,18 @@ const router = express.Router();
 const MONDAY_API_URL = 'https://api.monday.com/v2';
 const MONDAY_API_KEY = 'eyJhbGciOiJIUzI1NiJ9.eyJ0aWQiOjM3OTMzNzQ1NCwiYWFpIjoxMSwidWlkIjo2MjkyMjE1NCwiaWFkIjoiMjAyNC0wNy0wMlQwODo1OTozNC41NjNaIiwicGVyIjoibWU6d3JpdGUiLCJhY3RpZCI6MjQyMjk0NzYsInJnbiI6ImV1YzEifQ.kdG6KdOjz9XhO3J4aOz89m1wMd_rAND25BwkM0vTiHY';  // Remplacez par votre clé API
 // Fonction pour obtenir le dernier ID d'item sur le board
+
+// Fonction pour obtenir le dernier ID d'item sur le board
 const getLastItemId = async (boardId) => {
 	const query = `
 	  query ($boardId: [ID!]) {
 	    boards(ids: $boardId) {
-		 items_page(limit: 100) {
-		   items {
-			id
-			name
-		   }
-		 }
+		items_page(limit: 100) {
+		  items {
+		   id
+		   name
+		  }
+		}
 	    }
 	  }
 	`;
@@ -57,55 +59,54 @@ const getLastItemId = async (boardId) => {
 	}
 };
 
-// Route pour gérer la mutation create_item
 router.post('/create_item', async (req, res) => {
 	try {
 		const { board_id, column_values } = req.body;
 
-		// Vérification que column_values est défini et est une chaîne de caractères
-		if (!column_values || typeof column_values !== 'string') {
-			return res.status(400).send('column_values est requis et doit être une chaîne de caractères.');
+		// Ensure column_values is defined and is an object
+		if (!column_values || typeof column_values !== 'object') {
+			return res.status(400).send('column_values is required and must be an object.');
 		}
 
-		// Obtenir le dernier ID d'item et générer le nouvel ID
+		// Get the last item ID and generate the new ID
 		const lastItemId = await getLastItemId(board_id);
 		console.log('lastItemId', lastItemId);
 		const newItemId = lastItemId + 1;
 		const item_name = `${newItemId}`;
 
-		const query = `
-	    mutation ($boardId: ID!, $itemName: String!, $columnValues: JSON!) {
+		// Correctly format column_values
+		const formattedColumnValues = JSON.stringify(column_values).replace(/\\/g, '\\\\').replace(/\"/g, '\\"');
+
+		const mutation = `
+	    mutation {
 		 create_item (
-		   board_id: $boardId,
-		   item_name: $itemName,
-		   column_values: $columnValues
+		   board_id: ${board_id},
+		   item_name: "${item_name}",
+		   column_values: "${formattedColumnValues}"
 		 ) {
 		   id
 		   name
 		 }
 	    }
 	  `;
+		console.log(JSON.stringify(mutation));
 
-		const variables = {
-			boardId: board_id,
-			itemName: item_name,
-			columnValues: column_values
-		};
-
-		const response = await axios.post(MONDAY_API_URL, {
-			query: query,
-			variables: variables
-		}, {
+		const response = await fetch(MONDAY_API_URL, {
+			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				'Authorization': MONDAY_API_KEY,
+				'Authorization': `Bearer ${MONDAY_API_KEY}`
 			},
+			body: JSON.stringify({ query: mutation })
 		});
 
-		res.status(201).json(response.data);
+		const data = await response.json();
+
+		console.log('response', data);
+		res.status(201).json(data);
 	} catch (error) {
-		console.error('Erreur lors de la création de l\'item : ', error.message);
-		res.status(500).send('Erreur lors de la création de l\'item : ' + error.message);
+		console.error('Error creating item: ', error.message);
+		res.status(500).send('Error creating item: ' + error.message);
 	}
 });
 
