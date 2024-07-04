@@ -38,10 +38,10 @@
       </v-row>
     </v-container>
   </template>
-  
+
   <script setup>
   import { ref } from 'vue';
-  
+
   const profile = ref({
     firstName: '',
     lastName: '',
@@ -50,7 +50,7 @@
   });
 
   </script>
-  <style>
+  <style scoped>
   .v-container {
     height : 100vh;
     display: flex;
@@ -58,4 +58,3 @@
     justify-content: center;
   }
   </style>
-  
