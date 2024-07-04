@@ -1,0 +1,25 @@
+meta {
+  name: Get Board
+  type: graphql
+  seq: 1
+}
+
+post {
+  url: https://api.monday.com/v2
+  body: graphql
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{Bearer}}
+}
+
+body:graphql {
+  query {
+    boards {
+      id
+      name
+    }
+  }
+  
+}

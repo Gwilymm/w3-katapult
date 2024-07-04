@@ -1,0 +1,31 @@
+meta {
+  name: last row in boars
+  type: graphql
+  seq: 5
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{Bearer}}
+}
+
+body:graphql {
+  query {
+    boards(ids: 1550966743) {
+      views {
+        type
+        settings_str
+        view_specific_data_str
+        name
+        id
+      
+      }
+    }
+  }
+  
+}

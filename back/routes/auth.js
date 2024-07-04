@@ -1,0 +1,196 @@
+const express = require("express");
+const db = require('../models');
+const router = express.Router();
+const app = express();
+const User = require("../models/UserModel.js");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const multer = require("multer");
+const path = require("path");
+const axios = require("axios"); // Assurez-vous que axios est importé
+const secretKey = "katapult_secret_key";
+
+// Configuration de multer pour les uploads
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/");
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname)); // Ajouter une timestamp pour éviter les conflits de noms
+  },
+});
+
+const upload = multer({ storage: storage });
+
+// Middleware pour parser les requêtes POST
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+// Middleware pour charger dynamiquement les routes
+router.get("/", async (req, res) => {
+  res.send("Hello World");
+});
+
+// Pour servir les fichiers statiques
+router.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+// Middleware pour vérifier le token JWT
+const authenticate = (req, res, next) => {
+  const token = req.headers.authorization;
+  if (!token) {
+    return res.status(401).send({ message: "Token manquant" });
+  }
+  try {
+    const user = jwt.verify(token, secretKey);
+    req.user = user;
+    next();
+  } catch (error) {
+    return res.status(401).send({ message: "Token invalide" });
+  }
+};
+
+// Route pour l'enregistrement des utilisateurs
+router.post("/register", async (req, res) => {
+  const { username, email, password, firstName, lastName, address, birthDate, phoneNumber } = req.body;
+  try {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = await db.User.create({
+      username,
+      email,
+      password: hashedPassword,
+      firstName,
+      lastName,
+      address,
+      birthDate,
+      phoneNumber
+    });
+    const token = jwt.sign({ userId: user.id }, secretKey);
+
+    // Créer un nouvel item dans le tableau Monday.com
+    const board_id = '1550966743'; // Remplacez par l'ID de votre tableau Monday.com
+    const column_values = {
+      texte__1: lastName,
+      texte9__1: firstName,
+      e_mail5__1: email,
+      t_l_phone8__1: phoneNumber,
+      date__1: birthDate,
+      date1__1: new Date().toISOString().split('T')[ 0 ]
+    };
+
+    JSON.stringify(column_values);
+
+    // Utiliser axios pour appeler la route create_item
+    await axios.post('http://localhost:3000/api/monday/create_item', { board_id, column_values }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer votre_token' // Remplacez par votre token si nécessaire
+      }
+    });
+    // log axios and monday.com response
+
+
+    res.json({ ...user.toJSON(), token });
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: "Erreur lors de l'enregistrement" });
+  }
+});
+
+// Route pour la connexion des utilisateurs
+router.post("/login", async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    const user = await db.User.findOne({ where: { username } });
+    if (!user) {
+      return res.status(404).send({ message: "Utilisateur non retrouvé" });
+    }
+
+    const valid = await bcrypt.compare(password, user.password);
+    if (!valid) {
+      return res.status(401).send({ message: "Mot de passe incorrect" });
+    }
+
+    const token = jwt.sign({ userId: user.id }, secretKey);
+    res.json({ ...user.toJSON(), token });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: "Erreur lors de la connexion" });
+  }
+});
+
+// Route pour obtenir le profil utilisateur
+router.get("/user/:id", authenticate, async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const user = await db.User.findByPk(id);
+    if (!user) {
+      return res.status(404).send({ message: "Utilisateur non retrouvé" });
+    }
+
+    res.json(user);
+  } catch (error) {
+    res.status(500).send({
+      message: "Erreur lors de la récupération du profil utilisateur",
+    });
+  }
+});
+
+// Route pour mettre à jour le profil utilisateur
+router.put("/user/:id", authenticate, async (req, res) => {
+  const { id } = req.params;
+  const { profilePicture, address, siret, birthDate, phoneNumber } = req.body;
+
+  try {
+    const user = await User.findByPk(id);
+    if (!user) {
+      return res.status(404).send({ message: "Utilisateur non retrouvé" });
+    }
+
+    await user.update({
+      profilePicture,
+      address,
+      siret,
+      birthDate,
+      phoneNumber,
+    });
+    res.json(user);
+  } catch (error) {
+    res
+      .status(500)
+      .send({ message: "Erreur lors de la mise à jour du profil utilisateur" });
+  }
+});
+
+// Route pour uploader une photo de profil
+router.post(
+  "/user/:id/upload",
+  authenticate,
+  upload.single("file"),
+  async (req, res) => {
+    const { id } = req.params;
+    const file = req.file;
+
+    try {
+      const user = await User.findByPk(id);
+      if (!user) {
+        return res.status(404).send({ message: "Utilisateur non retrouvé" });
+      }
+
+      const profilePictureUrl = `/uploads/${file.filename}`;
+      await user.update({ profilePicture: profilePictureUrl });
+      res.json(user);
+    } catch (error) {
+      res
+        .status(500)
+        .send({ message: "Erreur lors de l'upload de la photo de profil" });
+    }
+  }
+);
+
+// Générer le PDF
+router.get("/user/:id/pdf", authenticate, async (req, res) => { });
+
+module.exports = router;
