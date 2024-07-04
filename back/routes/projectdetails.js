@@ -41,6 +41,23 @@ router.get('/', async (req, res) => {
 		res.status(500).json({ message: 'Erreur lors de la récupération des détails du projet', error: error.message });
 	}
 });
+router.get('/application/:applicationId', async (req, res) => {
+	const { applicationId } = req.params;
+
+	try {
+		const projectDetails = await ProjectDetails.findAll({
+			where: { applicationId: applicationId }
+		});
+
+		if (projectDetails.length > 0) {
+			res.status(200).json(projectDetails);
+		} else {
+			res.status(404).json({ message: 'Aucun détail de projet trouvé pour cette application.' });
+		}
+	} catch (error) {
+		res.status(500).json({ message: 'Erreur lors de la récupération des détails du projet', error: error.message });
+	}
+});
 
 // Get ProjectDetails by ID
 router.get('/:id', async (req, res) => {
