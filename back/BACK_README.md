@@ -76,7 +76,7 @@
 [Retour au sommaire](../README.md)
 
 
-### 1. [LegalStructures](#legalstructures)
+### 9. [LegalStructures](#legalstructures)
 - [Create a new LegalStructure](Docs/legalstructures.md#create-a-new-legalstructure)
 - [Get all LegalStructures](Docs/legalstructures.md#get-all-legalstructures)
 - [Get a LegalStructure by ID](Docs/legalstructures.md#get-a-legalstructure-by-id)
@@ -85,7 +85,7 @@
 
 [Retour au sommaire](../README.md)
 
-### 1. [ProjectIdentities](#projectidentities)
+### 10. [ProjectIdentities](#projectidentities)
 - [Create a new ProjectIdentity](Docs/projectidentities.md#create-a-new-projectidentity)
 - [Get all ProjectIdentities](Docs/projectidentities.md#get-all-projectidentities)
 - [Get a ProjectIdentity by ID](Docs/projectidentities.md#get-a-projectidentity-by-id)
@@ -94,7 +94,7 @@
 
 [Retour au sommaire](../README.md)
 
-### 1. [ProjectMembers](#projectmembers)
+### 11. [ProjectMembers](#projectmembers)
 - [Create a new ProjectMember](Docs/projectmembers.md#create-a-new-projectmember)
 - [Get all ProjectMembers](Docs/projectmembers.md#get-all-projectmembers)
 - [Get a ProjectMember by ID](Docs/projectmembers.md#get-a-projectmember-by-id)
