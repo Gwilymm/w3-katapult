@@ -1,9 +1,9 @@
 <template>
-  <v-app-bar :elevation="5">
-    <div>
+  <v-app-bar :elevation="2">
+    <v-container>
       <v-app-bar-nav-icon @click="goToHome"></v-app-bar-nav-icon>
-      <v-app-bar-title>ADRESS Normandie Incubateur Katapult</v-app-bar-title>
-    </div>
+      <v-app-bar-title class="ml-3">ADRESS Normandie Incubateur Katapult</v-app-bar-title>
+    </v-container>
     <template v-slot:append>
       <v-btn v-if="!isUserConnected" @click="goToSignUp">S'inscrire</v-btn>
       <v-btn v-if="!isUserConnected" @click="goToLogin">Se connecter</v-btn>
@@ -39,5 +39,4 @@ function goToLogin() {
 </script>
 
 <style>
-/* Add your styles here */
 </style>
