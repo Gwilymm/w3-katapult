@@ -57,10 +57,10 @@
 
 
 ### 8.[Monday.com Integration](#mondaycom-integration)
-    - [Create a new Item](Docs/monday.md#create-a-new-item)
-    - [Internal Functions](Docs/monday.md#internal-functions)
-        - [Get Last Item ID](Docs/monday.md#get-last-item-id)
-    - [Update an Item](Docs/monday.md#update-an-item)
-    - [Internal Functions](Docs/monday.md#internal-functions)
-        - [Get Item ID](Docs/monday.md#get-item-id)
+- [Create a new Item](Docs/monday.md#create-a-new-item)
+- [Internal Functions](Docs/monday.md#internal-functions)
+- [Get Last Item ID](Docs/monday.md#get-last-item-id)
+- [Update an Item](Docs/monday.md#update-an-item)
+- [Internal Functions](Docs/monday.md#internal-functions)
+- [Get Item ID](Docs/monday.md#get-item-id)
 
