@@ -21,7 +21,23 @@ router.get('/', async (req, res) => {
 		res.status(400).json({ error: error.message });
 	}
 });
+router.get('/application/:applicationId', async (req, res) => {
+	const { applicationId } = req.params;
 
+	try {
+		const legalStructure = await legalStructure.findAll({
+			where: { applicationId: applicationId }
+		});
+
+		if (legalStructure.length > 0) {
+			res.status(200).json(legalStructure);
+		} else {
+			res.status(404).json({ message: 'Aucun détail de projet trouvé pour cette application.' });
+		}
+	} catch (error) {
+		res.status(500).json({ message: 'Erreur lors de la récupération des détails du projet', error: error.message });
+	}
+});
 // Récupérer une structure juridique par ID
 router.get('/:id', async (req, res) => {
 	try {
