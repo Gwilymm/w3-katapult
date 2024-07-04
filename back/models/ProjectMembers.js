@@ -1,3 +1,4 @@
+// coordonnées co-porteur
 module.exports = (sequelize, DataTypes) => {
 	const ProjectMembers = sequelize.define('ProjectMembers', {
 		firstName: {

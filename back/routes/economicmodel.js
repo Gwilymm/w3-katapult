@@ -41,7 +41,23 @@ router.get('/', async (req, res) => {
 		res.status(500).json({ message: 'Erreur lors de la récupération des modèles économiques', error: error.message });
 	}
 });
+router.get('/application/:applicationId', async (req, res) => {
+	const { applicationId } = req.params;
 
+	try {
+		const economic = await economic.findAll({
+			where: { applicationId: applicationId }
+		});
+
+		if (economic.length > 0) {
+			res.status(200).json(economic);
+		} else {
+			res.status(404).json({ message: 'Aucun détail de projet trouvé pour cette application.' });
+		}
+	} catch (error) {
+		res.status(500).json({ message: 'Erreur lors de la récupération des détails du projet', error: error.message });
+	}
+});
 // Get an EconomicModel by ID
 router.get('/:id', async (req, res) => {
 	const { id } = req.params;

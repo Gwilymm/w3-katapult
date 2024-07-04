@@ -23,7 +23,23 @@ router.get('/', async (req, res) => {
 		res.status(500).json({ message: 'Erreur lors de la récupération des conscent', error: error.message });
 	}
 });
+router.get('/application/:applicationId', async (req, res) => {
+	const { applicationId } = req.params;
 
+	try {
+		const conscent = await conscent.findAll({
+			where: { applicationId: applicationId }
+		});
+
+		if (conscent.length > 0) {
+			res.status(200).json(conscent);
+		} else {
+			res.status(404).json({ message: 'Aucun détail de projet trouvé pour cette application.' });
+		}
+	} catch (error) {
+		res.status(500).json({ message: 'Erreur lors de la récupération des détails du projet', error: error.message });
+	}
+});
 // Get a conscent by id
 router.get('/:id', async (req, res) => {
 	const { id } = req.params;
