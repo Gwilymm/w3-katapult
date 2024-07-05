@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {ProjectIdentity} = require('../models');
+const { ProjectIdentity } = require('../models');
 
 // Créer une nouvelle identité de projet
 router.post('/', async (req, res) => {

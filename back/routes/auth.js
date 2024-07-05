@@ -79,8 +79,10 @@ router.post("/register", async (req, res) => {
 
     JSON.stringify(column_values);
 
+    const userId = user.id;
+
     // Utiliser axios pour appeler la route create_item
-    await axios.post('http://localhost:3000/api/monday/create_item', { board_id, column_values }, {
+    await axios.post('http://localhost:3000/api/monday/create_item', { board_id, column_values, userId }, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer votre_token' // Remplacez par votre token si nécessaire

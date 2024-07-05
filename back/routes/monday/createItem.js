@@ -1,6 +1,7 @@
 const express = require('express');
 const axios = require('axios');
 const router = express.Router();
+const db = require('../../models');
 
 const MONDAY_API_URL = 'https://api.monday.com/v2';
 const MONDAY_API_KEY = 'eyJhbGciOiJIUzI1NiJ9.eyJ0aWQiOjM3OTMzNzQ1NCwiYWFpIjoxMSwidWlkIjo2MjkyMjE1NCwiaWFkIjoiMjAyNC0wNy0wMlQwODo1OTozNC41NjNaIiwicGVyIjoibWU6d3JpdGUiLCJhY3RpZCI6MjQyMjk0NzYsInJnbiI6ImV1YzEifQ.kdG6KdOjz9XhO3J4aOz89m1wMd_rAND25BwkM0vTiHY';  // Remplacez par votre clé API
@@ -61,7 +62,7 @@ const getLastItemId = async (boardId) => {
 
 router.post('/create_item', async (req, res) => {
 	try {
-		const { board_id, column_values } = req.body;
+		const { board_id, column_values, userId } = req.body;
 
 		// Ensure column_values is defined and is an object
 		if (!column_values || typeof column_values !== 'object') {
@@ -103,6 +104,8 @@ router.post('/create_item', async (req, res) => {
 		const data = await response.json();
 
 		console.log('response', data);
+		// update the user in the database with the new item id
+		await db.User.update({ itemId: data.data.create_item.id }, { where: { id: userId } });
 		res.status(201).json(data);
 	} catch (error) {
 		console.error('Error creating item: ', error.message);
