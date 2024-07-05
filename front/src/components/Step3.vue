@@ -76,7 +76,11 @@
   </v-card>
 </template>
 <script setup>
-import { ref, reactive } from 'vue';
+import { onMounted, ref, reactive } from 'vue';
+import { useAuthStore } from '@/stores/authStore';
+import { ApiService } from '@/services/apiServices';
+
+const authStore = useAuthStore();
 
 const valid = ref(false)
 const formData = reactive({
@@ -89,6 +93,18 @@ const formData = reactive({
   role:'',
 })
 
+onMounted(async ()=>{
+  let economicModel = await ApiService.getEconomicModel(authStore.appId)
+  let data = economicModel[0]
+  formData.revenus= data.revenueSources
+  formData.emplois= data.jobCreation
+  formData.viabilite=data.economicViability
+  formData.diversification=data.diversificationProjects
+  formData.partenariat=data.partnerships
+  formData.autreContact=data.partnershipsResearch
+  formData.role=data.stakeholderRoles
+})
+
 const rules = {
   required: (value) => !!value || "Requis",
 };
@@ -98,8 +114,49 @@ const nextStep = () => {
     emit("next");
   }
 };
-const savedData = localStorage.getItem("step3");
-if (savedData) {
-  Object.assign(formData, JSON.parse(savedData));
-}
+
+
+// Watchers for each field
+watch(
+  () => formData.revenus,
+  (newVal) => {
+    authStore.setStep3({ ...formData, revenus: newVal });
+  }
+);
+watch(
+  () => formData.emplois,
+  (newVal) => {
+    authStore.setStep3({ ...formData, emplois: newVal });
+  }
+);
+watch(
+  () => formData.viabilite,
+  (newVal) => {
+    authStore.setStep3({ ...formData, viabilite: newVal });
+  }
+);
+watch(
+  () => formData.diversification,
+  (newVal) => {
+    authStore.setStep3({ ...formData, diversification: newVal });
+  }
+);
+watch(
+  () => formData.partenariat,
+  (newVal) => {
+    authStore.setStep3({ ...formData, partenariat: newVal });
+  }
+);
+watch(
+  () => formData.autreContact,
+  (newVal) => {
+    authStore.setStep3({ ...formData, autreContact: newVal });
+  }
+);
+watch(
+  () => formData.role,
+  (newVal) => {
+    authStore.setStep3({ ...formData, role: newVal });
+  }
+);
 </script>

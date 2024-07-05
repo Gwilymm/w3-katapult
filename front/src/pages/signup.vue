@@ -3,7 +3,6 @@
     <v-container>
       <v-row justify="center">
         <v-col cols="12" md="8">
-          <App-Bar></App-Bar>
           <v-form @submit.prevent ="submitSignUp">
             <v-text-field
               v-model="user.username"
@@ -35,11 +34,6 @@
               label="Nom"
               prepend-icon="mdi-account"
               required
-            ></v-text-field>
-            <v-text-field
-              v-model="user.profilePicture"
-              label="Photo de profile"
-              prepend-icon="mdi-image"
             ></v-text-field>
             <v-text-field
               v-model="user.address"
@@ -74,6 +68,7 @@
 <script setup>
 import { ref } from 'vue';
 import { ApiService } from '@/services/apiServices';
+import { useAuthStore } from '@/stores/authStore';
 import router from '@/router';
 
 const user = ref({
@@ -90,15 +85,16 @@ const user = ref({
 })
 
 
-function submitSignUp() {
-  ApiService.signUp(user.value)
-    .then((response) => {
-      console.log(response)
-      router.push({ name: '/profile' })
-    })
-    .catch((error) => {
-      console.log(error)
-    })
+async function submitSignUp() {
+  try {
+    let response = await ApiService.signUp(user.value)
+    useAuthStore().setToken(response.data.token);
+    useAuthStore().setUser(user.value)
+    router.push('/')
+  } catch(e) {
+    console.error(e)
+  }
+
 }
 
 </script>

@@ -50,6 +50,9 @@ import Step4 from "../components/Step4.vue";
 import Step5 from "../components/Step5.vue";
 import Step6 from "../components/Step6.vue";
 import Step0 from "../components/Step0.vue";
+import { useAuthStore } from "../stores/authStore";
+import { ApiService } from "@/services/apiServices";
+
 
 const stepItems = [
   "Étape 0",
@@ -62,6 +65,8 @@ const stepItems = [
 ];
 const step = ref(1);
 const errors = ref([]);
+const authStore = useAuthStore();
+
 
 const nextStep = () => {
   if (step.value < stepItems.length) step.value++;
@@ -73,28 +78,31 @@ const prevStep = () => {
 
 const submitForm = () => {
   const formData = {
-    ...JSON.parse(localStorage.getItem("step0")),
     ...JSON.parse(localStorage.getItem("step1")),
-    ...JSON.parse(localStorage.getItem("step2")),
+    ...authStore.step2,
     ...JSON.parse(localStorage.getItem("step3")),
     ...JSON.parse(localStorage.getItem("step4")),
     ...JSON.parse(localStorage.getItem("step5")),
     ...JSON.parse(localStorage.getItem("step6")),
   };
-  console.log("Form data:", formData);
 };
 
-const saveForm = () => {
-  const formData = {
-    ...JSON.parse(localStorage.getItem("step0")),
-    ...JSON.parse(localStorage.getItem("step1")),
-    ...JSON.parse(localStorage.getItem("step2")),
-    ...JSON.parse(localStorage.getItem("step3")),
-    ...JSON.parse(localStorage.getItem("step4")),
-    ...JSON.parse(localStorage.getItem("step5")),
-    ...JSON.parse(localStorage.getItem("step6")),
-  };
-  localStorage.setItem('savedForm', JSON.stringify(formData));
+const saveForm = async () => {
+  try{
+    await ApiService.updateProjectDetails(authStore.projectDetailId, authStore.appId, authStore.step2)
+    await ApiService.updateEconomicModel(authStore.economicModelId, authStore.appId, authStore.step3)
+  } catch(e){
+    console.error(e)
+  }
+  // const formData = {
+  //   ...JSON.parse(localStorage.getItem("step1")),
+  //   ...authStore.step2,
+  //   ...JSON.parse(localStorage.getItem("step3")),
+  //   ...JSON.parse(localStorage.getItem("step4")),
+  //   ...JSON.parse(localStorage.getItem("step5")),
+  //   ...JSON.parse(localStorage.getItem("step6")),
+  // };
+  // localStorage.setItem('savedForm', JSON.stringify(formData));
   alert('Formulaire sauvegardé!');
 };
 </script>

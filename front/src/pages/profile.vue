@@ -1,5 +1,4 @@
 <template>
-    <App-Bar></App-Bar>
     <v-container>
       <v-row justify="center">
         <v-col cols="12" sm="8" md="6">
@@ -32,7 +31,7 @@
               dense
               type="number"
             ></v-text-field>
-            <v-btn color="primary">Save</v-btn>
+          <!-- <v-btn color="primary">Save</v-btn> --> 
           </v-form>
         </v-col>
       </v-row>
@@ -40,14 +39,33 @@
   </template>
 
   <script setup>
-  import { ref } from 'vue';
+  import { ref,onMounted, watch } from 'vue';
+  import { useAuthStore } from '@/stores/authStore';
 
+  const authStore = useAuthStore();
   const profile = ref({
     firstName: '',
     lastName: '',
     email: '',
     phoneNumber: ''
   });
+
+  const loadUserProfile = () => {
+  const userInfo = authStore.getUserInfo;
+  profile.value = { ...userInfo };
+};
+
+watch(
+  () => authStore.getUserInfo,
+  (newValue) => {
+    profile.value = { ...newValue };
+  },
+  { immediate: true }
+);
+
+onMounted(() => {
+  loadUserProfile();
+});
 
   </script>
   <style scoped>

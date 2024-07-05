@@ -48,11 +48,9 @@ const loadRoutes = (app) => {
 // Charger les routes
 loadRoutes(app);
 
-
-
 // Gérer les routes non-API en renvoyant `index.html`
 app.get('*', (req, res) => {
-	res.sendFile(path.join(__dirname, '../front/dist/index.html'));
+    res.sendFile(path.join(__dirname, '../front/dist/index.html'));
 });
 
 
@@ -62,4 +60,5 @@ sequelize.sync().then(() => {
 	});
 }).catch(error => {
 	console.error('Unable to sync database:', error);
+
 });
