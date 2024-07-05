@@ -94,48 +94,49 @@ export class ApiService {
     }
   }
 
-  static async createEconomicModel(applicationId, details) {
+  static async createEconomicModel(applicationId, details = null) {
     try {
-      const response = await apiService.post("/economic/", {
-        "applicationId": applicationId,
-        "revenueSources": details.revenus,
-        "jobCreation": details.emplois,
-        "economicViability": details.viabilite,
-        "diversificationProjects": details.diversification,
-        "partnerships": details.partenariat,
-        "partnershipsResearch": details.autreContact,
-        "stakeholderRoles": details.role,
+      const response = await apiService.post("/economicmodel/", {
+        applicationId: applicationId,
+        revenueSources: details?.revenus | "",
+        jobCreation: details?.emplois | "",
+        economicViability: details?.viabilite | "",
+        diversificationProjects: details?.diversification | "",
+        partnerships: details?.partenariat | "",
+        partnershipsResearch: details?.autreContact | "",
+        stakeholderRoles: details?.role | "",
       });
-      return response.data
+      return response.data;
     } catch (e) {
       console.error(e);
     }
   }
 
   static async getEconomicModel(applicationId) {
-    try{
-        const response = await apiService.get(`/economic/${applicationId}`)
-        return response.data
-    } catch(e) {
-        console.error(e)
+    try {
+      const response = await apiService.get(
+        `/economicmodel/application/${applicationId}`
+      );
+      return response.data;
+    } catch (e) {
+      console.error(e);
     }
   }
-  static async updateEconomicModel(economicId, applicationId, details){
+  static async updateEconomicModel(economicId, applicationId, details) {
     try {
-        const response = await apiService.put(`/economic/${economicId}`, {
-            "applicationId": applicationId,
-            "revenueSources": details.revenus,
-            "jobCreation": details.emplois,
-            "economicViability": details.viabilite,
-            "diversificationProjects": details.diversification,
-            "partnerships": details.partenariat,
-            "partnershipsResearch": details.autreContact,
-            "stakeholderRoles": details.role,
-        })
-        return response.data
-    } catch(e){
-        console.error(e)
+      const response = await apiService.put(`/economicmodel/${economicId}`, {
+        applicationId: applicationId,
+        revenueSources: details.revenus,
+        jobCreation: details.emplois,
+        economicViability: details.viabilite,
+        diversificationProjects: details.diversification,
+        partnerships: details.partenariat,
+        partnershipsResearch: details.autreContact,
+        stakeholderRoles: details.role,
+      });
+      return response.data;
+    } catch (e) {
+      console.error(e);
     }
-
   }
 }

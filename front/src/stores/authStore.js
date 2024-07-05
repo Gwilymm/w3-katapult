@@ -9,20 +9,30 @@ export const useAuthStore = defineStore("auth", {
       lastName: "",
       email: "",
       phoneNumber: "",
-      birthDate:"",
-      address:""
+      birthDate: "",
+      address: "",
     },
-    step2 : {
-      projectDescription:'',
-      resume:'',
-      ampleur:'',
-      socialUtility:'',
-      solution:'',
-      difference:'',
-      indicateurs:''
+    step2: {
+      projectDescription: "",
+      resume: "",
+      ampleur: "",
+      socialUtility: "",
+      solution: "",
+      difference: "",
+      indicateurs: "",
     },
-    appId:null,
-    projectDetailId:null
+    step3: {
+      revenus: "",
+      emplois: "",
+      viabilite: "",
+      diversification: "",
+      partenariat: "",
+      autreContact: "",
+      role: "",
+    },
+    appId: null,
+    projectDetailId: null,
+    economicModelId: null,
   }),
   getters: {
     isAuthenticated: (state) => !!state.token,
@@ -39,7 +49,7 @@ export const useAuthStore = defineStore("auth", {
       this.user.email = userData.email;
       this.user.phoneNumber = userData.phoneNumber;
       this.user.birthDate = userData.birthDate;
-      this.user.address = userData.address
+      this.user.address = userData.address;
     },
     setStep2(formData) {
       this.step2.projectDescription = formData.projectDescription;
@@ -50,11 +60,23 @@ export const useAuthStore = defineStore("auth", {
       this.step2.difference = formData.difference;
       this.step2.indicateurs = formData.indicateurs;
     },
-    setAppId(appId) {
-      this.appId = appId
+    setStep3(formData) {
+      this.step3.revenus = formData.revenus;
+      this.step3.emplois = formData.emplois;
+      this.step3.viabilite = formData.viabilite;
+      this.step3.diversification = formData.diversification;
+      this.step3.partenariat = formData.partenariat;
+      this.step3.autreContact = formData.autreContact;
+      this.step3.role = formData.role;
     },
-    setProjectDetailId(projectDetailId){
-      this.projectDetailId = projectDetailId
+    setAppId(appId) {
+      this.appId = appId;
+    },
+    setProjectDetailId(projectDetailId) {
+      this.projectDetailId = projectDetailId;
+    },
+    setEconomicModelId(economicModelId) {
+      this.economicModelId = economicModelId;
     },
     clearToken() {
       this.token = null;
@@ -66,21 +88,25 @@ export const useAuthStore = defineStore("auth", {
         lastName: "",
         email: "",
         phoneNumber: "",
-        birthDate:"",
-        address:""
+        birthDate: "",
+        address: "",
       };
     },
-    clearAppId(){
-      this.appId = null
+    clearAppId() {
+      this.appId = null;
     },
-    clearProjectDetailId(){
-      this.projectDetailId = null
+    clearProjectDetailId() {
+      this.projectDetailId = null;
+    },
+    clearEconomicModelId() {
+      this.economicModelId = null;
     },
     logout() {
       this.clearToken();
       this.clearUser();
       this.clearAppId();
       this.clearProjectDetailId();
+      this.clearEconomicModelId();
     },
   },
 });

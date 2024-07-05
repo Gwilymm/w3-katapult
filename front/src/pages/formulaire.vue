@@ -89,8 +89,8 @@ const submitForm = () => {
 
 const saveForm = async () => {
   try{
-    const result =await ApiService.updateProjectDetails(authStore.projectDetailId, authStore.appId, authStore.step2)
-    console.log(result)
+    await ApiService.updateProjectDetails(authStore.projectDetailId, authStore.appId, authStore.step2)
+    await ApiService.updateEconomicModel(authStore.economicModelId, authStore.appId, authStore.step3)
   } catch(e){
     console.error(e)
   }
