@@ -45,7 +45,7 @@ router.get('/application/:applicationId', async (req, res) => {
 	const { applicationId } = req.params;
 
 	try {
-		const economic = await economic.findAll({
+		const economic = await EconomicModel.findAll({
 			where: { applicationId: applicationId }
 		});
 
