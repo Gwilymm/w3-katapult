@@ -42,7 +42,7 @@ export class ApiService {
   static async getApp(userId) {
     try {
       const response = await apiService.get(`/application/${userId}`);
-      return response.data;
+      return response;
     } catch (e) {
       console.error(e);
     }

@@ -68,14 +68,17 @@ onMounted(async () => {
       app = await ApiService.createApp(user.id)
       details = await ApiService.createProjectDetails(app.id)
       economic = await ApiService.createEconomicModel(app.id)
+      useAuthStore().economicModelId = economic.id
+      useAuthStore().appId = app.id
+
     }
     else{
-      details = await ApiService.getProjectDetails(app.id)
-      economic = await ApiService.getEconomicModel(app.id)
+      details = await ApiService.getProjectDetails(app.data.id)
+      economic = await ApiService.getEconomicModel(app.data.id)
+      useAuthStore().economicModelId = economic[0].id
+      useAuthStore().appId = app.data.id
     }
-    useAuthStore().appId = app.id
     useAuthStore().projectDetailId = details.data[0].id
-    useAuthStore().economicModelId = economic.id
   } catch (e) {
     console.error(e);
   }

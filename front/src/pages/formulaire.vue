@@ -80,7 +80,7 @@ const submitForm = () => {
   const formData = {
     ...JSON.parse(localStorage.getItem("step1")),
     ...authStore.step2,
-    ...JSON.parse(localStorage.getItem("step3")),
+    ...authStore.step3,
     ...JSON.parse(localStorage.getItem("step4")),
     ...JSON.parse(localStorage.getItem("step5")),
     ...JSON.parse(localStorage.getItem("step6")),
@@ -94,15 +94,6 @@ const saveForm = async () => {
   } catch(e){
     console.error(e)
   }
-  // const formData = {
-  //   ...JSON.parse(localStorage.getItem("step1")),
-  //   ...authStore.step2,
-  //   ...JSON.parse(localStorage.getItem("step3")),
-  //   ...JSON.parse(localStorage.getItem("step4")),
-  //   ...JSON.parse(localStorage.getItem("step5")),
-  //   ...JSON.parse(localStorage.getItem("step6")),
-  // };
-  // localStorage.setItem('savedForm', JSON.stringify(formData));
   alert('Formulaire sauvegardé!');
 };
 </script>
