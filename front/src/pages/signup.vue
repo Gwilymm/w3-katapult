@@ -3,7 +3,6 @@
     <v-container>
       <v-row justify="center">
         <v-col cols="12" md="8">
-          <App-Bar></App-Bar>
           <v-form @submit.prevent ="submitSignUp">
             <v-text-field
               v-model="user.username"
@@ -37,11 +36,6 @@
               required
             ></v-text-field>
             <v-text-field
-              v-model="user.profilePicture"
-              label="Photo de profile"
-              prepend-icon="mdi-image"
-            ></v-text-field>
-            <v-text-field
               v-model="user.address"
               label="Address"
               prepend-icon="mdi-home"
@@ -63,7 +57,7 @@
               type="date"
               prepend-icon="mdi-calendar"
             ></v-text-field>
-            <v-btn type="submit" color="primary">S'inscrire</v-btn>
+            <v-btn type="submit" class="red-btn">S'inscrire</v-btn>
           </v-form>
         </v-col>
       </v-row>
@@ -74,6 +68,7 @@
 <script setup>
 import { ref } from 'vue';
 import { ApiService } from '@/services/apiServices';
+import { useAuthStore } from '@/stores/authStore';
 import router from '@/router';
 
 const user = ref({
@@ -90,20 +85,22 @@ const user = ref({
 })
 
 
-function submitSignUp() {
-  ApiService.signUp(user.value)
-    .then((response) => {
-      console.log(response)
-      router.push({ name: '/profile' })
-    })
-    .catch((error) => {
-      console.log(error)
-    })
+async function submitSignUp() {
+  try {
+    let response = await ApiService.signUp(user.value)
+    useAuthStore().setToken(response.data.token);
+    useAuthStore().setUser(user.value)
+    router.push('/')
+  } catch(e) {
+    console.error(e)
+  }
+
 }
 
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import '../styles/settings.scss';
 v-container {
   height: 100vh;
   display: flex;
@@ -113,5 +110,9 @@ v-container {
 
 v-row {
   width: 100%;
+}
+.red-btn {
+  background-color: $red !important;
+  color: white;
 }
 </style>

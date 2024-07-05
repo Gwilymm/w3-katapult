@@ -29,12 +29,16 @@ module.exports = (sequelize, DataTypes) => {
 			allowNull: true,
 		},
 		referentStatus: {
-			type: DataTypes.ENUM('Salarié', 'Bénévole'),
+			type: DataTypes.STRING,
 			allowNull: false,
 		},
 		referentDuration: {
 			type: DataTypes.STRING,
 			allowNull: false,
+		},
+		siret: {
+			type: DataTypes.STRING,
+			allowNull: true,
 		},
 
 	});

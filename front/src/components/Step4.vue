@@ -222,7 +222,7 @@ const rules = {
   required: (value) => !!value || "Requis",
 };
 const addPersonInfo = () => {
-  formData.value.otherPeopleInfo.push({
+  formData.otherPeopleInfo.push({
     name: "",
     shortTime: "",
     shortTimePrecision: "",

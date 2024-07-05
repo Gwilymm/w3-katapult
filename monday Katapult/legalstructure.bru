@@ -1,0 +1,27 @@
+meta {
+  name: legalstructure
+  type: http
+  seq: 9
+}
+
+post {
+  url: http://localhost:3000/api/legalstructure
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "applicationId": 1,
+    "structureName": "Nom de la structure",
+    "legalStatus": "Association",
+    "otherStatus": "Statut particulier",
+    "creationDate": "2023-01-15",
+    "applicationContext": "Contexte de la candidature",
+    "otherContext": "Autre contexte spécifique",
+    "referentStatus": "Salarié",
+    "referentDuration": "Durée de référence",
+    "siret": "12345678901234"
+  }
+  
+}

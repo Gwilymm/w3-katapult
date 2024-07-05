@@ -1,6 +1,6 @@
 ## Base URL
 
-<http://localhost:3000/api/economic>
+<http://localhost:3000/api/economicmodel>
 
 ## EconomicModel
 

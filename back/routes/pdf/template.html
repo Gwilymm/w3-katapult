@@ -7,7 +7,7 @@
     <style>
       body {
         font-family: Arial, sans-serif;
-        line-height: 1.6;
+        line-height: 1;
         margin: 0;
         padding: 0;
         background-color: #f4f4f4;
@@ -84,7 +84,6 @@
       .form-group label {
         display: block;
         margin-bottom: 5px;
-        font-weight: bold;
       }
       .form-group input,
       .form-group textarea,
@@ -136,7 +135,6 @@
       .form-group label {
         display: block;
         margin-bottom: 5px;
-        font-weight: bold;
       }
 
       .form-group input,
@@ -186,7 +184,12 @@
               <td colspan="2">
                 <div class="form-group">
                   <label for="nom-projet">Nom du projet</label>
-                  <input type="text" id="nom-projet" name="nom-projet" />
+                  <input
+                    type="text"
+                    id="nom-projet"
+                    name="nom-projet"
+                    value="{{projectIdentities.projectName}}"
+                  />
                 </div>
               </td>
             </tr>
@@ -198,6 +201,7 @@
                     type="text"
                     id="secteur-activite"
                     name="secteur-activite"
+                    value="{{projectIdentities.activitySector}}"
                   />
                 </div>
               </td>
@@ -211,6 +215,7 @@
                     type="text"
                     id="territoire-implantation"
                     name="territoire-implantation"
+                    value="{{projectIdentities.implantationTerritory}}"
                   />
                 </div>
               </td>
@@ -222,48 +227,42 @@
                     >Zone géographique d'intervention (périmètre touché par
                     votre projet)</label
                   >
-                  <div>
-                    <label
-                      ><input type="checkbox" name="zone" value="quartier" />
-                      Quartier</label
-                    >
-                    <label
-                      ><input
-                        type="checkbox"
-                        name="zone"
-                        value="ville-village"
-                      />
-                      Ville / village</label
-                    >
-                    <label
-                      ><input
-                        type="checkbox"
-                        name="zone"
-                        value="agglomeration-metropole"
-                      />
-                      Agglomération / Métropole</label
-                    >
-                    <label
-                      ><input type="checkbox" name="zone" value="departement" />
-                      Département</label
-                    >
-                    <label
-                      ><input type="checkbox" name="zone" value="region" />
-                      Région</label
-                    >
-                    <label
-                      ><input type="checkbox" name="zone" value="national" />
-                      National</label
-                    >
-                    <label
-                      ><input
-                        type="checkbox"
-                        name="zone"
-                        value="international"
-                      />
-                      International</label
-                    >
-                  </div>
+                  <label>
+                    <input type="checkbox" name="zone" value="quartier"
+                    {{#ifChecked projectIdentities.interventionZone
+                    'quartier'}}> Quartier
+                  </label>
+                  <label>
+                    <input type="checkbox" name="zone" value="ville-village"
+                    {{#ifChecked projectIdentities.interventionZone
+                    'ville-village'}}> Ville / village
+                  </label>
+                  <label>
+                    <input type="checkbox" name="zone"
+                    value="agglomeration-metropole" {{#ifChecked
+                    projectIdentities.interventionZone
+                    'agglomeration-metropole'}}> Agglomération / Métropole
+                  </label>
+                  <label>
+                    <input type="checkbox" name="zone" value="departement"
+                    {{#ifChecked projectIdentities.interventionZone
+                    'departement'}}> Département
+                  </label>
+                  <label>
+                    <input type="checkbox" name="zone" value="region"
+                    {{#ifChecked projectIdentities.interventionZone 'region'}}>
+                    Région
+                  </label>
+                  <label>
+                    <input type="checkbox" name="zone" value="national"
+                    {{#ifChecked projectIdentities.interventionZone
+                    'national'}}> National
+                  </label>
+                  <label>
+                    <input type="checkbox" name="zone" value="international"
+                    {{#ifChecked projectIdentities.interventionZone
+                    'international'}}> International
+                  </label>
                 </div>
               </td>
             </tr>
@@ -276,41 +275,36 @@
                   >
                   <div>
                     <label
-                      ><input
-                        type="checkbox"
-                        name="source"
-                        value="bouche-a-oreilles"
-                      />
-                      Bouche à oreilles (réseau personnel ou
-                      professionnel)</label
+                      ><input type="checkbox" name="source"
+                      value="bouche-a-oreilles" {{#ifChecked
+                      projectIdentities.awareness 'bouche-a-oreilles'}}> Bouche
+                      à oreilles (réseau personnel ou professionnel)</label
                     >
                     <label
-                      ><input type="checkbox" name="source" value="facebook" />
+                      ><input type="checkbox" name="source" value="facebook"
+                      {{#ifChecked projectIdentities.awareness 'facebook'}}>
                       Contenu sur Facebook</label
                     >
                     <label
-                      ><input type="checkbox" name="source" value="linkedin" />
+                      ><input type="checkbox" name="source" value="linkedin"
+                      {{#ifChecked projectIdentities.awareness 'linkedin'}}>
                       Contenu sur LinkedIn</label
                     >
                     <label
-                      ><input type="checkbox" name="source" value="web" />
-                      Contenu sur le web</label
+                      ><input type="checkbox" name="source" value="web"
+                      {{#ifChecked projectIdentities.awareness 'web'}}> Contenu
+                      sur le web</label
                     >
                     <label
-                      ><input
-                        type="checkbox"
-                        name="source"
-                        value="information-par-tiers"
-                      />
+                      ><input type="checkbox" name="source"
+                      value="information-par-tiers" {{#ifChecked
+                      projectIdentities.awareness 'information-par-tiers'}}>
                       Information par un tiers (structure d’accompagnement,
                       collectivité…)</label
                     >
                     <label
-                      ><input
-                        type="checkbox"
-                        name="source"
-                        value="presse-radio"
-                      />
+                      ><input type="checkbox" name="source" value="presse-radio"
+                      {{#ifChecked projectIdentities.awareness 'presse-radio'}}>
                       Presse / Radio</label
                     >
                   </div>
@@ -326,81 +320,183 @@
         <h2>L'équipe projet</h2>
         <div class="form-group">
           <label for="nom">Nom</label>
-          <input type="text" id="nom" name="nom" />
+          <input type="text" id="name" name="name" value="{{user.lastName}}" />
         </div>
         <div class="form-group">
           <label for="prenom">Prénom</label>
-          <input type="text" id="prenom" name="prenom" />
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            value="{{user.firstName}}"
+          />
         </div>
         <div class="form-group">
           <label for="date-naissance">Date de naissance</label>
-          <input type="date" id="date-naissance" name="date-naissance" />
+          <input
+            type="text"
+            id="birthDate"
+            name="birthDate"
+            value="{{user.birthDate}}"
+          />
         </div>
         <div class="form-group">
           <label for="adresse">Adresse</label>
-          <input type="text" id="adresse" name="adresse" />
+          <input
+            type="text"
+            id="adresse"
+            name="adresse"
+            value="{{user.address}}"
+          />
         </div>
         <div class="form-group">
           <label for="email">E-mail</label>
-          <input type="email" id="email" name="email" />
+          <input type="email" id="email" name="email" value="{{user.email}}" />
         </div>
         <div class="form-group">
           <label for="telephone">Téléphone</label>
-          <input type="tel" id="telephone" name="telephone" />
+          <input
+            type="tel"
+            id="telephone"
+            name="telephone"
+            value="{{user.phoneNumber}}"
+          />
         </div>
         <div class="form-group">
-          <label for="autres-personnes"
-            >Autres personnes impliquées dans le projet (qui participeront
-            potentiellement au parcours d’incubation)</label
-          >
-          <textarea id="autres-personnes" name="autres-personnes"></textarea>
+          <h3>Autres personnes impliquées dans le projet</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Email</th>
+                <th>Téléphone</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#projectTeam}}
+              <tr></tr>
+            </tbody>
+          </table>
         </div>
-        <div class="form-group">
-          <label for="structure-juridique"
-            >Structure juridique déjà existante (si c’est le cas)</label
-          >
-          <textarea
-            id="structure-juridique"
-            name="structure-juridique"
-          ></textarea>
+        <div class="form-group page-break" style="margin-top: 10px">
+          <h2>Structure juridique déjà existante (si c’est le cas)</h2>
+          <p>
+            Si le projet est porté par une entreprise déjà en activité, veuillez
+            préciser :
+          </p>
+          <table>
+            <tr>
+              <td>Nom de la structure</td>
+              <td>
+                <input
+                  type="text"
+                  id="nom-structure"
+                  name="nom-structure"
+                  value="{{legalStructure.structureName}}"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>Statut juridique</td>
+              <td>
+                <label
+                  ><input type="checkbox" name="legalStatus" value="association"
+                  {{#ifChecked legalStructure.legalStatus 'association'}}>
+                  Association</label
+                ><br />
+                <label
+                  ><input type="checkbox" name="legalStatus" value="coopérative"
+                  {{#ifChecked legalStructure.legalStatus 'coopérative'}}>
+                  Coopérative</label
+                ><br />
+                <label
+                  ><input type="checkbox" name="legalStatus"
+                  value="societe-commerciale-ess" {{#ifChecked
+                  legalStructure.legalStatus 'societe-commerciale-ess'}}>
+                  Société commerciale de l’ESS</label
+                ><br />
+                <label
+                  ><input type="checkbox" name="legalStatus"
+                  value="societe-commerciale-hors-ess" {{#ifChecked
+                  legalStructure.legalStatus 'societe-commerciale-hors-ess'}}>
+                  Société commerciale hors ESS</label
+                ><br />
+                <label
+                  ><input type="checkbox" name="legalStatus" value="autre"
+                  {{#ifChecked legalStructure.legalStatus 'autre'}}> Autre:
+                  préciser…</label
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>Date de création</td>
+              <td>
+                <input
+                  type="text"
+                  id="date-creation"
+                  name="date-creation"
+                  value="{{legalStructure.creationDate}}"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Dans quel cadre la structure candidate-t-elle à l’incubateur?
+              </td>
+              <td>
+                <label
+                  ><input type="checkbox" name="applicationContext"
+                  value="developpement-nouvelle-activite" {{#ifChecked
+                  legalStructure.applicationContext
+                  'developpement-nouvelle-activite'}}> Développement d’une
+                  nouvelle activité</label
+                ><br />
+                <label
+                  ><input type="checkbox" name="applicationContext"
+                  value="implantation-normandie" {{#ifChecked
+                  legalStructure.applicationContext 'normandie'}}> Implantation
+                  en Normandie</label
+                ><br />
+                <label
+                  ><input type="checkbox" name="applicationContext"
+                  value="autre" {{#ifChecked legalStructure.applicationContext
+                  'autre'}}> Autre: préciser…</label
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>
+                La personne référente pour le projet est-elle salariée par la
+                structure ou bénévole?
+              </td>
+              <td>
+                <label
+                  ><input type="checkbox" name="referentStatus" value="Salarié"
+                  {{#ifChecked legalStructure.referentStatus 'salarie'}}>
+                  Salarié</label
+                ><br />
+                <label
+                  ><input type="checkbox" name="referentStatus" value="Bénévole"
+                  {{#ifChecked legalStructure.referentStatus 'benevole'}}>
+                  Bénévole</label
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>Depuis combien de temps?</td>
+              <td>
+                <input
+                  type="text"
+                  id="referent-duration"
+                  name="referent-duration"
+                  value="{{legalStructure.referentDuration}}"
+                />
+              </td>
+            </tr>
+          </table>
         </div>
-        <div class="form-group">
-          <label for="nom-structure">Nom de la structure</label>
-          <input type="text" id="nom-structure" name="nom-structure" />
-        </div>
-        <div class="form-group">
-          <label for="statut-juridique">Statut juridique</label>
-          <select id="statut-juridique" name="statut-juridique">
-            <option value="association">Association</option>
-            <option value="coopérative">Coopérative</option>
-            <option value="societe-commerciale-ess">
-              Société commerciale de l’ESS
-            </option>
-            <option value="societe-commerciale-hors-ess">
-              Société commerciale hors ESS
-            </option>
-            <option value="autre">Autre: préciser…</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="date-creation">Date de création</label>
-          <input type="date" id="date-creation" name="date-creation" />
-        </div>
-        <div class="form-group">
-          <label for="cadre-candidature"
-            >Dans quel cadre la structure candidate-t-elle à
-            l’incubateur?</label
-          >
-          <select id="cadre-candidature" name="cadre-candidature">
-            <option value="developpement-nouvelle-activite">
-              Développement d’une nouvelle activité
-            </option>
-            <option value="implantation-normandie">
-              Implantation en Normandie
-            </option>
-            <option value="autre">Autre: préciser…</option>
-          </select>
-        </div>
+
         <div class="form-group">
           <label for="referente-salariee"
             >La personne référente pour le projet est-elle salariée par la

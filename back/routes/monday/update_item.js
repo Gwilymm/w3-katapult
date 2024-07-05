@@ -70,7 +70,7 @@ router.post('/update_item', async (req, res) => {
 
 		const query = `
 	    mutation ($boardId: ID!, $itemId: ID!, $columnId: String!, $value: JSON!) {
-		 change_column_value (
+		 change_multiple_column_values (
 		   board_id: $boardId,
 		   item_id: $itemId,
 		   column_id: $columnId,

@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../models');
+const {ProjectIdentity} = require('../models');
 
 // Créer une nouvelle identité de projet
 router.post('/', async (req, res) => {
 	try {
-		const projectIdentity = await db.ProjectIdentity.create(req.body);
+		const projectIdentity = await ProjectIdentity.create(req.body);
 		res.status(201).json(projectIdentity);
 	} catch (error) {
 		res.status(400).json({ error: error.message });
@@ -15,7 +15,7 @@ router.post('/', async (req, res) => {
 // Récupérer toutes les identités de projet
 router.get('/', async (req, res) => {
 	try {
-		const projectIdentities = await db.ProjectIdentity.findAll();
+		const projectIdentities = await ProjectIdentity.findAll();
 		res.status(200).json(projectIdentities);
 	} catch (error) {
 		res.status(400).json({ error: error.message });
@@ -25,7 +25,7 @@ router.get('/application/:applicationId', async (req, res) => {
 	const { applicationId } = req.params;
 
 	try {
-		const projectIdentities = await projectIdentities.findAll({
+		const projectIdentities = await ProjectIdentity.findAll({
 			where: { applicationId: applicationId }
 		});
 
@@ -41,7 +41,7 @@ router.get('/application/:applicationId', async (req, res) => {
 // Récupérer une identité de projet par ID
 router.get('/:id', async (req, res) => {
 	try {
-		const projectIdentity = await db.ProjectIdentity.findByPk(req.params.id);
+		const projectIdentity = await ProjectIdentity.findByPk(req.params.id);
 		if (!projectIdentity) {
 			return res.status(404).json({ error: 'Identité de projet non trouvée' });
 		}
@@ -54,7 +54,7 @@ router.get('/:id', async (req, res) => {
 // Mettre à jour une identité de projet
 router.put('/:id', async (req, res) => {
 	try {
-		const projectIdentity = await db.ProjectIdentity.findByPk(req.params.id);
+		const projectIdentity = await ProjectIdentity.findByPk(req.params.id);
 		if (!projectIdentity) {
 			return res.status(404).json({ error: 'Identité de projet non trouvée' });
 		}
@@ -68,7 +68,7 @@ router.put('/:id', async (req, res) => {
 // Supprimer une identité de projet
 router.delete('/:id', async (req, res) => {
 	try {
-		const projectIdentity = await db.ProjectIdentity.findByPk(req.params.id);
+		const projectIdentity = await ProjectIdentity.findByPk(req.params.id);
 		if (!projectIdentity) {
 			return res.status(404).json({ error: 'Identité de projet non trouvée' });
 		}

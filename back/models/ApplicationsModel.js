@@ -18,13 +18,5 @@ module.exports = (sequelize, DataTypes) => {
 		}
 	});
 
-	Application.associate = (models) => {
-		Application.belongsTo(models.User, { foreignKey: 'userId', as: 'User' });
-		Application.hasMany(models.ProjectTeam, { foreignKey: 'applicationId' });
-		Application.hasOne(models.ProjectDetails, { foreignKey: 'applicationId' });
-		Application.hasOne(models.EconomicModel, { foreignKey: 'applicationId' });
-		Application.hasOne(models.TeamIntroduction, { foreignKey: 'applicationId' });
-	};
-
 	return Application;
 };

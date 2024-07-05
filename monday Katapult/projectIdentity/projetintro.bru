@@ -1,0 +1,25 @@
+meta {
+  name: projetintro
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3000/api/teamIntroduction
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "applicationId": 1,
+    "teamIntroduction": "Nous sommes une équipe passionnée et diversifiée, dédiée à l'innovation.",
+    "entrepreneurialExperience": "Plusieurs membres ont déjà lancé des startups avec succès.",
+    "inspirationalEntrepreneur": "Elon Musk pour son audace et sa vision.",
+    "missingSkills": "Nous manquons de compétences en marketing digital.",
+    "incubationParticipation": "Nous avons participé à plusieurs incubateurs locaux.",
+    "professionalSituation": "La plupart des membres de l'équipe sont actuellement employés à temps plein.",
+    "incubationSchedule": "Nous sommes disponibles pour des sessions d'incubation le soir et le week-end."
+  }
+  
+}

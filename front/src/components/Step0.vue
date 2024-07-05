@@ -38,17 +38,12 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-row>
-        <v-col cols="12">
-            <v-card subtitle="Numéro de siret">
-              <v-text-field v-model="siret"></v-text-field>
-            </v-card>
-        </v-col>
-    </v-row>
   </v-card>
 </template>
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { useAuthStore } from "@/stores/authStore";
+import { ApiService } from "@/services/apiServices";
 
 let firstName = ref("");
 let lastName = ref("");
@@ -56,5 +51,40 @@ let birthDate = ref("");
 let email = ref("");
 let adress = ref("");
 let phoneNbr = ref("");
-let siret = ref("");
+
+onMounted(async () => {
+  try {
+    let user = useAuthStore().user;
+    firstName.value = user.firstName;
+    lastName.value = user.lastName;
+    birthDate.value = user.birthDate;
+    email.value = user.email;
+    phoneNbr.value = user.phoneNumber;
+    adress.value = user.address;
+    let app = await ApiService.getApp(user.id);
+    let identity = null;
+    let details = null;
+    let economic = null;
+    if(app == undefined){
+      app = await ApiService.createApp(user.id)
+      identity = await ApiService.createIdentity(app.id)
+      details = await ApiService.createProjectDetails(app.id)
+      economic = await ApiService.createEconomicModel(app.id)
+      useAuthStore().economicModelId = economic.id
+      useAuthStore().appId = app.id
+      useAuthStore().projectIdentityId = identity.id
+    }
+    else{
+      identity = await ApiService.getIdentity(app.data.id)
+      details = await ApiService.getProjectDetails(app.data.id)
+      economic = await ApiService.getEconomicModel(app.data.id)
+      useAuthStore().economicModelId = economic[0].id
+      useAuthStore().appId = app.data.id
+      useAuthStore().projectIdentityId = identity[0].id
+    }
+    useAuthStore().projectDetailId = details.data[0].id
+  } catch (e) {
+    console.error(e);
+  }
+});
 </script>
