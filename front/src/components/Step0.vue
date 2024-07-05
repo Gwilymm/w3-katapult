@@ -62,21 +62,25 @@ onMounted(async () => {
     phoneNbr.value = user.phoneNumber;
     adress.value = user.address;
     let app = await ApiService.getApp(user.id);
+    let identity = null;
     let details = null;
     let economic = null;
     if(app == undefined){
       app = await ApiService.createApp(user.id)
+      identity = await ApiService.createIdentity(app.id)
       details = await ApiService.createProjectDetails(app.id)
       economic = await ApiService.createEconomicModel(app.id)
       useAuthStore().economicModelId = economic.id
       useAuthStore().appId = app.id
-
+      useAuthStore().projectIdentityId = identity.id
     }
     else{
+      identity = await ApiService.getIdentity(app.data.id)
       details = await ApiService.getProjectDetails(app.data.id)
       economic = await ApiService.getEconomicModel(app.data.id)
       useAuthStore().economicModelId = economic[0].id
       useAuthStore().appId = app.data.id
+      useAuthStore().projectIdentityId = identity[0].id
     }
     useAuthStore().projectDetailId = details.data[0].id
   } catch (e) {

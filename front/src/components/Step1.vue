@@ -3,29 +3,16 @@
     <v-form ref="form1" v-model="valid" @submit.prevent="nextStep">
       <v-card subtitle="Nom du projet">
         <v-text-field
-          v-model="formData.projectName"
+          v-model="formData.identity.projectName"
           :rules="[rules.required]"
         ></v-text-field>
-      </v-card>
-      <v-card subtitle="Avez-vous un numéro de SIRET">
-        <v-text-field :rules="[rules.required]"></v-text-field>
-        <v-radio-group v-model="formData.siretNbrRsp">
-          <v-radio value="non" label="Non"></v-radio>
-          <v-radio value="oui" label="Oui"></v-radio>
-        </v-radio-group>
-        <template v-if="formData.siretNbrRsp === 'oui'">
-          <v-text-field
-            v-model="formData.siretNbr"
-            :rules="[rules.required]"
-          ></v-text-field>
-        </template>
       </v-card>
       <v-card>
         <v-row>
           <v-col cols="12" md="6">
             <v-list-subheader>Secteur d'activité</v-list-subheader>
             <v-text-field
-              v-model="formData.sector"
+              v-model="formData.identity.sector"
               :rules="[rules.required]"
             ></v-text-field>
           </v-col>
@@ -35,7 +22,7 @@
               département...)</v-list-subheader
             >
             <v-text-field
-              v-model="formData.location"
+              v-model="formData.identity.location"
               :rules="[rules.required]"
             ></v-text-field>
           </v-col>
@@ -50,37 +37,37 @@
             >
 
             <v-checkbox
-              v-model="formData.geographicZone"
+              v-model="formData.identity.geographicZone"
               value="Quartier"
               label="Quartier"
             ></v-checkbox>
             <v-checkbox
-              v-model="formData.geographicZone"
+              v-model="formData.identity.geographicZone"
               value="Ville/village"
               label="Ville/village"
             ></v-checkbox>
             <v-checkbox
-              v-model="formData.geographicZone"
+              v-model="formData.identity.geographicZone"
               value="Agglomération/Métropole"
               label="Agglomération/Métropole"
             ></v-checkbox>
             <v-checkbox
-              v-model="formData.geographicZone"
+              v-model="formData.identity.geographicZone"
               value="Département"
               label="Département"
             ></v-checkbox>
             <v-checkbox
-              v-model="formData.geographicZone"
+              v-model="formData.identity.geographicZone"
               value="Région"
               label="Région"
             ></v-checkbox>
             <v-checkbox
-              v-model="formData.geographicZone"
+              v-model="formData.identity.geographicZone"
               value="National"
               label="National"
             ></v-checkbox>
             <v-checkbox
-              v-model="formData.geographicZone"
+              v-model="formData.identity.geographicZone"
               value="International"
               label="International"
             ></v-checkbox>
@@ -91,32 +78,32 @@
               ?</v-list-subheader
             >
             <v-checkbox
-              v-model="formData.discoveryMethod"
+              v-model="formData.identity.discoveryMethod"
               value="Bouche à oreilles (réseau personnel ou professionnel)"
               label="Bouche à oreilles (réseau personnel ou professionnel)"
             ></v-checkbox>
             <v-checkbox
-              v-model="formData.discoveryMethod"
+              v-model="formData.identity.discoveryMethod"
               value="Contenu sur Facebook"
               label="Contenu sur Facebook"
             ></v-checkbox>
             <v-checkbox
-              v-model="formData.discoveryMethod"
+              v-model="formData.identity.discoveryMethod"
               value="Contenu sur Linkedin"
               label="Contenu sur Linkedin"
             ></v-checkbox>
             <v-checkbox
-              v-model="formData.discoveryMethod"
+              v-model="formData.identity.discoveryMethod"
               value="Contenu sur le web"
               label="Contenu sur le web"
             ></v-checkbox>
             <v-checkbox
-              v-model="formData.discoveryMethod"
+              v-model="formData.identity.discoveryMethod"
               value="Information par un tiers (structure d'accompagnement, collectivité...)"
               label="Information par un tiers (structure d'accompagnement, collectivité...)"
             ></v-checkbox>
             <v-checkbox
-              v-model="formData.discoveryMethod"
+              v-model="formData.identity.discoveryMethod"
               value="Presse/Radio"
               label="Presse/Radio"
             ></v-checkbox>
@@ -181,38 +168,43 @@
         >
         <v-btn @click="addPerson">Ajouter une personne</v-btn>
         <div v-for="(person, index) in formData.otherPeople" :key="index">
-          <v-row>
-            <v-col cols="12" md="3">
-              <v-text-field
-                v-model="person.firstName"
-                :rules="[rules.required]"
-                label="Prénom"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" md="3">
-              <v-text-field
-                v-model="person.lastName"
-                :rules="[rules.required]"
-                label="Nom"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" md="3">
-              <v-text-field
-                v-model="person.email"
-                :rules="[rules.required, rules.email]"
-                label="E-mail"
-                type="email"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" md="3">
-              <v-text-field
-                v-model="person.phone"
-                :rules="[rules.required]"
-                label="Téléphone"
-                type="tel"
-              ></v-text-field>
-            </v-col>
-          </v-row>
+          <v-form @submit.prevent="sendOtherPeople">
+            <v-row>
+              <v-col cols="12" md="2">
+                <v-text-field
+                  v-model="person.firstName"
+                  :rules="[rules.required]"
+                  label="Prénom"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" md="2">
+                <v-text-field
+                  v-model="person.lastName"
+                  :rules="[rules.required]"
+                  label="Nom"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" md="3">
+                <v-text-field
+                  v-model="person.email"
+                  :rules="[rules.required, rules.email]"
+                  label="E-mail"
+                  type="email"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" md="3">
+                <v-text-field
+                  v-model="person.phone"
+                  :rules="[rules.required]"
+                  label="Téléphone"
+                  type="tel"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" md="2">
+                <v-btn type="submit">OK</v-btn>
+              </v-col>
+            </v-row>
+          </v-form>
         </div>
       </v-card>
       <v-card title="Structure juridique déjà existante (si c'est le cas)">
@@ -228,6 +220,7 @@
           <v-radio value="oui" label="Oui"></v-radio>
         </v-radio-group>
         <template v-if="formData.legalStructureExist === 'oui'">
+            <v-text-field :rules="[rules.required]" label="Numéro de SIRET"></v-text-field>
           <v-text-field
             v-model="formData.legalStructureName"
             :rules="[rules.required]"
@@ -285,18 +278,22 @@
   </v-card>
 </template>
 <script setup>
-import { ref, reactive, watch } from "vue";
+import {onMounted, ref, reactive, watch } from "vue";
+import { ApiService } from "@/services/apiServices";
+import { useAuthStore } from "../stores/authStore";
+
+const authStore = useAuthStore();
 
 const valid = ref(false);
 const formData = reactive({
-  projectName: "",
-  siretNbrRsp: "",
+  identity : {
+    projectName: "",
+    sector: "",
+    location: "",
+    geographicZone: "",
+    discoveryMethod: "",
+  },
   siretNbr: "",
-  sector: "",
-  location: "",
-  geographicZone: "",
-  territory: "",
-  discoveryMethod: "",
   referentLastName: "",
   referentFirstName: "",
   referentBirthdate: "",
@@ -313,6 +310,22 @@ const formData = reactive({
   referentRoleDuration: "",
 });
 
+onMounted(async ()=>{
+  let identity = await ApiService.getIdentity(authStore.appId);
+  let data = identity[0]
+  formData.identity.projectName= data.projectName
+  formData.identity.sector = data.activitySector
+  formData.identity.location = data.implantationTerritory
+  formData.identity.geographicZone = data.interventionZone
+  formData.identity.discoveryMethod = data.awareness
+  let user = authStore.user
+  formData.referentLastName = user.lastName
+  formData.referentFirstName = user.firstName
+  formData.referentBirthdate = user.birthDate
+  formData.referentAddress = user.address
+  formData.referentEmail = user.email
+  formData.referentPhone = user.phoneNumber
+})
 const rules = {
   required: (value) => !!value || "Requis",
 };
@@ -331,8 +344,40 @@ const nextStep = () => {
   }
 };
 
-const savedData = localStorage.getItem("step1");
-if (savedData) {
-  Object.assign(formData, JSON.parse(savedData));
+async function sendOtherPeople() {
+  console.log("ajouter")
+  // const response = ApiService.createProjectMember(authStore.projectIdentityId, )
 }
+
+// Watchers for each field
+watch(
+  () => formData.identity.projectName,
+  (newVal) => {
+    authStore.setStep1Identity({ ...formData.identity, projectName: newVal });
+  }
+);
+watch(
+  () => formData.identity.sector,
+  (newVal) => {
+    authStore.setStep1Identity({ ...formData.identity, sector: newVal });
+  }
+);
+watch(
+  () => formData.identity.location,
+  (newVal) => {
+    authStore.setStep1Identity({ ...formData.identity, location: newVal });
+  }
+);
+watch(
+  () => formData.identity.geographicZone,
+  (newVal) => {
+    authStore.setStep1Identity({ ...formData.identity, geographicZone: newVal });
+  }
+);
+watch(
+  () => formData.identity.discoveryMethod,
+  (newVal) => {
+    authStore.setStep1Identity({ ...formData.identity, discoveryMethod: newVal });
+  }
+);
 </script>

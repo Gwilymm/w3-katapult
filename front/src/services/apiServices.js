@@ -139,4 +139,68 @@ export class ApiService {
       console.error(e);
     }
   }
+
+  static async createIdentity(applicationId, details=null){
+    try{
+      const response = await apiService.post("/projectidentity/",{
+        projectName: details?.projectName | "",
+        activitySector: details?.sector | "",
+        implantationTerritory: details?.location | "",
+        interventionZone:details?.geographicZone | "",
+        awareness:details?.discoveryMethod | "",
+        applicationId: applicationId
+      })
+      return response.data
+    }catch(e){
+      console.error(e)
+    }
+  }
+  static async getIdentity(applicationId) {
+    try {
+      const response = await apiService.get(
+        `/projectidentity/application/${applicationId}`
+      );
+      return response.data;
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  static async updateProjectIdentity(identityId, applicationId, details) {
+    try{
+      const response = apiService.put(`/projectidentity/${identityId}`,{
+        projectName: details.projectName,
+        activitySector: details.sector,
+        implantationTerritory: details.location,
+        interventionZone:details.geographicZone,
+        awareness:details.discoveryMethod,
+        applicationId: applicationId
+      })
+      return response.data
+    } catch(e){
+      console.error(e)
+    }
+  }
+  static async createProjectMember(projectId, details){
+    try {
+      const response = apiService.post('/projectmembers/',{
+        firstName: details.firstName,
+        lastName : details.lastName,
+        email:details.email,
+        phoneNumber:details.phone,
+        projectId:projectId
+      })
+      return response.data
+    } catch(e) {
+      console.error(e)
+    }
+  }
+  static async getProjectMembers(applicationId){
+    try{
+      const response = apiService.get(`/projectmembers/application/${applicationId}`)
+      return response.data
+    } catch(e) {
+      console.error(e)
+    }
+  }
 }

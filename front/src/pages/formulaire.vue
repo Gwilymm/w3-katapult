@@ -76,21 +76,11 @@ const prevStep = () => {
   if (step.value > 1) step.value--;
 };
 
-const submitForm = () => {
-  const formData = {
-    ...JSON.parse(localStorage.getItem("step1")),
-    ...authStore.step2,
-    ...authStore.step3,
-    ...JSON.parse(localStorage.getItem("step4")),
-    ...JSON.parse(localStorage.getItem("step5")),
-    ...JSON.parse(localStorage.getItem("step6")),
-  };
-};
-
 const saveForm = async () => {
   try{
     await ApiService.updateProjectDetails(authStore.projectDetailId, authStore.appId, authStore.step2)
     await ApiService.updateEconomicModel(authStore.economicModelId, authStore.appId, authStore.step3)
+    await ApiService.updateProjectIdentity(authStore.projectIdentityId, authStore.appId, authStore.step1Identity)
   } catch(e){
     console.error(e)
   }

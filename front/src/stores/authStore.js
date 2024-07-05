@@ -12,6 +12,13 @@ export const useAuthStore = defineStore("auth", {
       birthDate: "",
       address: "",
     },
+    step1Identity: {
+      projectName: "",
+      sector: "",
+      location: "",
+      geographicZone: "",
+      discoveryMethod: "",
+    },
     step2: {
       projectDescription: "",
       resume: "",
@@ -33,6 +40,7 @@ export const useAuthStore = defineStore("auth", {
     appId: null,
     projectDetailId: null,
     economicModelId: null,
+    projectIdentityId: null
   }),
   getters: {
     isAuthenticated: (state) => !!state.token,
@@ -50,6 +58,13 @@ export const useAuthStore = defineStore("auth", {
       this.user.phoneNumber = userData.phoneNumber;
       this.user.birthDate = userData.birthDate;
       this.user.address = userData.address;
+    },
+    setStep1Identity(formData){
+      this.step1Identity.projectName = formData.projectName
+      this.step1Identity.sector = formData.sector
+      this.step1Identity.location = formData.location
+      this.step1Identity.geographicZone = formData.geographicZone
+      this.step1Identity.discoveryMethod = formData.discoveryMethod
     },
     setStep2(formData) {
       this.step2.projectDescription = formData.projectDescription;
@@ -78,6 +93,9 @@ export const useAuthStore = defineStore("auth", {
     setEconomicModelId(economicModelId) {
       this.economicModelId = economicModelId;
     },
+    setProjectIdentityId(projectIdentityId){
+      this.projectIdentityId = projectIdentityId
+    },
     clearToken() {
       this.token = null;
     },
@@ -101,12 +119,16 @@ export const useAuthStore = defineStore("auth", {
     clearEconomicModelId() {
       this.economicModelId = null;
     },
+    clearProjectIdentityId(){
+      this.projectIdentityId = null
+    },
     logout() {
       this.clearToken();
       this.clearUser();
       this.clearAppId();
       this.clearProjectDetailId();
       this.clearEconomicModelId();
+      this.clearProjectIdentityId();
     },
   },
 });
