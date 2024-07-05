@@ -1,13 +1,14 @@
 <template>
   <v-app-bar :elevation="2">
-    <v-container>
-      <v-app-bar-nav-icon @click="goToHome"></v-app-bar-nav-icon>
+    <v-container class="iconTxt">
+      <v-icon icon="mdi mdi-home" @click="goToHome" color="red"></v-icon>
       <v-app-bar-title class="ml-3">ADRESS Normandie Incubateur Katapult</v-app-bar-title>
     </v-container>
     <template v-slot:append>
       <v-btn v-if="!isUserConnected" @click="goToSignUp">S'inscrire</v-btn>
       <v-btn v-if="!isUserConnected" @click="goToLogin">Se connecter</v-btn>
       <v-btn v-if="isUserConnected" @click="goToProfile" icon="mdi-account"></v-btn>
+      <v-btn v-if="isUserConnected" @click="logout" icon="mdi-logout"></v-btn>
     </template>
   </v-app-bar>
 </template>
@@ -36,7 +37,20 @@ function goToSignUp() {
 function goToLogin() {
   router.push('/login');
 }
-</script>
 
-<style>
+async function logout() {
+  try {
+    await authStore.logout();
+    goToHome(); 
+  } catch (error) {
+    console.error('Logout failed', error);
+  }
+}
+</script>
+<style scoped>
+.iconTxt {
+  display: flex;
+  width: 80%;
+  justify-content: space-around;
+}
 </style>
