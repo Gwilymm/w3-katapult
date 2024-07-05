@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../models');
+const { ProjectIdentity } = require('../models');
 
 // Créer une nouvelle identité de projet
 router.post('/', async (req, res) => {
@@ -25,7 +25,7 @@ router.get('/application/:applicationId', async (req, res) => {
 	const { applicationId } = req.params;
 
 	try {
-		const projectIdentities = await projectIdentities.findAll({
+		const projectIdentities = await ProjectIdentity.findAll({
 			where: { applicationId: applicationId }
 		});
 

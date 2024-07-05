@@ -3,7 +3,7 @@ import axios from 'axios';
 
 
 const apiService = axios.create({
-    baseURL: 'http://localhost:3000/api',
+    baseURL: 'https://antoine.bauchot.caen.mds-project.fr/api',
     withCredentials: true,
     headers: {
         Accept: 'application/json',
