@@ -1,0 +1,25 @@
+meta {
+  name: economicmodel
+  type: http
+  seq: 8
+}
+
+post {
+  url: http://localhost:3000/api/economicmodel
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "applicationId": 1,
+    "revenueSources": "Subventions, Vente de produits",
+    "jobCreation": "5 emplois créés en 2024",
+    "economicViability": "Prévisions de rentabilité à 3 ans",
+    "diversificationProjects": "Lancement de nouvelles lignes de produits",
+    "partnerships": "Collaboration avec des entreprises locales",
+    "partnershipsResearch": "Partenariats avec des universités pour la recherche",
+    "stakeholderRoles": "Rôles définis pour chaque partie prenante"
+  }
+  
+}

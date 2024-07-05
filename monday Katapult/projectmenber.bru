@@ -1,0 +1,22 @@
+meta {
+  name: projectmenber
+  type: http
+  seq: 10
+}
+
+post {
+  url: http://localhost:3000/api/projectMembers
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "firstName": "Bob",
+    "lastName": "Martin",
+    "email": "bob.martin@example.com",
+    "phoneNumber": "0987654321",
+    "projectId": 1
+  }
+  
+}

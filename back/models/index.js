@@ -40,7 +40,6 @@ db.TeamIntroduction.belongsTo(db.Application, { foreignKey: 'applicationId', as:
 db.Application.hasMany(db.ProjectTeam, { foreignKey: 'applicationId', as: 'projectTeams' });
 db.ProjectTeam.belongsTo(db.Application, { foreignKey: 'applicationId', as: 'application' });
 
-
 db.Application.hasMany(db.Conscent, { foreignKey: 'applicationId', as: 'conscent' });
 db.Conscent.belongsTo(db.Application, { foreignKey: 'applicationId', as: 'application' });
 

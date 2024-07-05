@@ -1,0 +1,22 @@
+meta {
+  name: createProjectIdentity
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:3000/api/projectidentity
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "projectName": "Projet Innovant",
+    "activitySector": "Technologie",
+    "implantationTerritory": "Normandie, France",
+    "interventionZone": "quartier,ville-village,agglomeration-metropole,departement,region,national,international",
+    "awareness": "facebook,linkedin,web",
+    "applicationId": 2
+  }
+}
