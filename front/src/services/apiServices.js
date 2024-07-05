@@ -2,7 +2,7 @@ import { useAuthStore } from "@/stores/authStore";
 import axios from "axios";
 
 const apiService = axios.create({
-  baseURL: "http://localhost:3000/api",
+  baseURL: "https://antoine.bauchot.caen.mds-project.fr/api",
   withCredentials: true,
   headers: {
     Accept: "application/json",
@@ -140,18 +140,18 @@ export class ApiService {
     }
   }
 
-  static async createIdentity(applicationId, details=null){
-    try{
-      const response = await apiService.post("/projectidentity/",{
+  static async createIdentity(applicationId, details = null) {
+    try {
+      const response = await apiService.post("/projectidentity/", {
         projectName: details?.projectName | "",
         activitySector: details?.sector | "",
         implantationTerritory: details?.location | "",
-        interventionZone:details?.geographicZone | "",
-        awareness:details?.discoveryMethod | "",
+        interventionZone: details?.geographicZone | "",
+        awareness: details?.discoveryMethod | "",
         applicationId: applicationId
       })
       return response.data
-    }catch(e){
+    } catch (e) {
       console.error(e)
     }
   }
@@ -167,39 +167,39 @@ export class ApiService {
   }
 
   static async updateProjectIdentity(identityId, applicationId, details) {
-    try{
-      const response = apiService.put(`/projectidentity/${identityId}`,{
+    try {
+      const response = apiService.put(`/projectidentity/${identityId}`, {
         projectName: details.projectName,
         activitySector: details.sector,
         implantationTerritory: details.location,
-        interventionZone:details.geographicZone,
-        awareness:details.discoveryMethod,
+        interventionZone: details.geographicZone,
+        awareness: details.discoveryMethod,
         applicationId: applicationId
       })
       return response.data
-    } catch(e){
+    } catch (e) {
       console.error(e)
     }
   }
-  static async createProjectMember(projectId, details){
+  static async createProjectMember(projectId, details) {
     try {
-      const response = apiService.post('/projectmembers/',{
+      const response = apiService.post('/projectmembers/', {
         firstName: details.firstName,
-        lastName : details.lastName,
-        email:details.email,
-        phoneNumber:details.phone,
-        projectId:projectId
+        lastName: details.lastName,
+        email: details.email,
+        phoneNumber: details.phone,
+        projectId: projectId
       })
       return response.data
-    } catch(e) {
+    } catch (e) {
       console.error(e)
     }
   }
-  static async getProjectMembers(applicationId){
-    try{
+  static async getProjectMembers(applicationId) {
+    try {
       const response = apiService.get(`/projectmembers/application/${applicationId}`)
       return response.data
-    } catch(e) {
+    } catch (e) {
       console.error(e)
     }
   }
