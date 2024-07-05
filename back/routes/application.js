@@ -1,7 +1,8 @@
 const express = require('express');
 const db = require('../models');
-
+const axios = require('axios');
 const router = express.Router();
+const board_id = 1550966743;
 
 // Route to create a new application
 router.post('/', async (req, res) => {
@@ -9,17 +10,26 @@ router.post('/', async (req, res) => {
 	try {
 		const application = await db.Application.create({ userId, applicationYear });
 
+		// Récupérer l'ID de l'item basé sur l'id de l'utilisateur
 
+		let itemID = await db.User.findOne({ where: { id: userId } });
 
-		// JSON.stringify(column_values);
+		itemID = itemID.itemId;
 
-		// // Utiliser axios pour appeler la route create_item
-		// await axios.post('http://localhost:3000/api/monday/update_item', { board_id, column_values }, {
-		// 	headers: {
-		// 		'Content-Type': 'application/json',
-		// 		'Authorization': 'Bearer votre_token' // Remplacez par votre token si nécessaire
-		// 	}
-		// });
+		const column_values = {
+			'application_year': applicationYear,
+			'userId': userId
+		};
+
+		console.log('column_values', column_values);
+
+		// Utiliser axios pour appeler la route create_item
+		await axios.post('http://localhost:3000/api/monday/update_item', { board_id, column_values, itemID }, {
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': 'Bearer votre_token' // Remplacez par votre token si nécessaire
+			}
+		});
 		res.status(200).json(application);
 	} catch (error) {
 		res.status(500).json({ error: error.message });

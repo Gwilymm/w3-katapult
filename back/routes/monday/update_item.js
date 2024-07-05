@@ -3,7 +3,7 @@ const axios = require('axios');
 const router = express.Router();
 
 const MONDAY_API_URL = 'https://api.monday.com/v2';
-const MONDAY_API_KEY = 'eyJhbGciOiJIUzI1NiJ9.eyJ0aWQiOjM3OTMzNzQ1NCwiYWFpIjoxMSwidWlkIjo2MjkyMjE1NCwiaWFkIjoiMjAyNC0wNy0wMlQwODo1OTozNC41NjNaIiwicGVyIjoibWU6d3JpdGUiLCJhY3RpZCI6MjQyMjk0NzYsInJnbiI6ImV1YzEifQ.kdG6KdOjz9XhO3J4aOz89m1wMd_rAND25BwkM0vTiHY';  // Remplacez par votre clé API
+const MONDAY_API_KEY = 'eyJhbGciOiJIUzI1NiJ9.eyJ0aWQiOjM4MDc4NTg5NywiYWFpIjoxMSwidWlkIjo2MjkyMjE1NCwiaWFkIjoiMjAyNC0wNy0wNVQxMDo0NTozNi41MTdaIiwicGVyIjoibWU6d3JpdGUiLCJhY3RpZCI6MjQyMjk0NzYsInJnbiI6ImV1YzEifQ.kv6PYomiVBxhPyhDvWQciwxTRmeT1dskd3muRvBtMKE';  // Remplacez par votre clé API
 
 // Fonction pour obtenir l'ID de l'item basé sur le nom de l'item
 const getItemId = async (boardId, itemName) => {
@@ -14,6 +14,10 @@ const getItemId = async (boardId, itemName) => {
                     items {
                         id
                         name
+				    column_values {
+          				id
+          				text
+        				}
                     }
                 }
             }
@@ -40,6 +44,8 @@ const getItemId = async (boardId, itemName) => {
 		const boards = response.data.data.boards;
 		if (boards.length > 0) {
 			const items = boards[ 0 ].items_page.items;
+			// get item by mail and return id
+			console.log('items', items);
 			const item = items.find(i => i.name === itemName);
 			return item ? item.id : null;
 		} else {
@@ -55,39 +61,27 @@ const getItemId = async (boardId, itemName) => {
 // Route pour mettre à jour un champ d'un item
 router.post('/update_item', async (req, res) => {
 	try {
-		const { board_id, item_name, column_id, value } = req.body;
+		const { board_id, item_id, column_values } = req.body;
+		console.log('req.body', req.body);
 
-		// Vérification que tous les paramètres sont définis
-		if (!board_id || !item_name || !column_id || !value) {
-			return res.status(400).send('board_id, item_name, column_id et value sont requis.');
-		}
-
-		// Obtenir l'ID de l'item basé sur le nom de l'item
-		const item_id = await getItemId(board_id, item_name);
-		if (!item_id) {
-			return res.status(404).send('Item non trouvé.');
-		}
-
+		const columnValuesString = JSON.stringify(column_values);
+		console.log("mes couilles");
 		const query = `
-	    mutation ($boardId: ID!, $itemId: ID!, $columnId: String!, $value: JSON!) {
+	    mutation ($boardId: ID!, $itemId: ID!, $columnValues: JSON!) {
 		 change_multiple_column_values (
 		   board_id: $boardId,
 		   item_id: $itemId,
-		   column_id: $columnId,
-		   value: $value
+		   column_values: $columnValues
 		 ) {
 		   id
 		   name
 		 }
 	    }
 	  `;
-		// if value is a date, we need to convert it to a string
-
 		const variables = {
 			boardId: board_id,
 			itemId: item_id,
-			columnId: column_id,
-			value: value  // Convert to JSON string without double quotes
+			columnValues: columnValuesString  // Convert to JSON string without double quotes
 		};
 
 		console.log('variables', variables);

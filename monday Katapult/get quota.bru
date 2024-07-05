@@ -1,0 +1,26 @@
+meta {
+  name: get quota
+  type: graphql
+  seq: 13
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{Bearer}}
+}
+
+body:graphql {
+  query {
+    complexity {
+      before
+      query
+      after
+      reset_in_x_seconds
+    }
+  }
+}
