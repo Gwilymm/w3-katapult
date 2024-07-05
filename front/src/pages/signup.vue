@@ -57,7 +57,7 @@
               type="date"
               prepend-icon="mdi-calendar"
             ></v-text-field>
-            <v-btn type="submit" color="primary">S'inscrire</v-btn>
+            <v-btn type="submit" class="red-btn">S'inscrire</v-btn>
           </v-form>
         </v-col>
       </v-row>
@@ -99,7 +99,8 @@ async function submitSignUp() {
 
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import '../styles/settings.scss';
 v-container {
   height: 100vh;
   display: flex;
@@ -109,5 +110,9 @@ v-container {
 
 v-row {
   width: 100%;
+}
+.red-btn {
+  background-color: $red !important;
+  color: white;
 }
 </style>

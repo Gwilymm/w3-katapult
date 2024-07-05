@@ -17,7 +17,7 @@
               prepend-icon="mdi-lock"
               required
             ></v-text-field>
-            <v-btn type="submit" color="primary">Se connecter</v-btn>
+            <v-btn type="submit" class="red-btn">Se connecter</v-btn>
           </v-form>
         </v-col>
       </v-row>
@@ -59,7 +59,8 @@ async function submitLogin() {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../styles/settings.scss";
 v-container {
   height: 100vh;
   display: flex;
@@ -69,5 +70,9 @@ v-container {
 
 v-row {
   width: 100%;
+}
+.red-btn {
+  background-color: $red !important;
+  color: white;
 }
 </style>

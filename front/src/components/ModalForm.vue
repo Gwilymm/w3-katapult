@@ -6,8 +6,8 @@
         Afin d'acceder au formulaire de candidature, veuillez vous connecter ou vous inscrire.
       </v-card-text>
       <v-card-actions>
-        <v-btn color="primary" @click="goToSignUp">S'inscrire</v-btn>
-        <v-btn color="primary" @click="goToLogin">Se connecter</v-btn>
+        <v-btn class="red-btn" @click="goToSignUp">S'inscrire</v-btn>
+        <v-btn class="red-btn" @click="goToLogin">Se connecter</v-btn>
         <v-spacer></v-spacer>
         <v-btn text @click="closeDialog">Fermer</v-btn>
       </v-card-actions>
@@ -47,3 +47,11 @@ function goToLogin() {
   closeDialog();
 }
 </script>
+
+<style scoped lang="scss">
+@import '../styles/settings.scss';
+.red-btn {
+  background-color: $red !important;
+  color: white;
+}
+</style>
